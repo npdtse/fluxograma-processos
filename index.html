@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apresentação: Fluxo de Auditoria Ordinária – TSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #F0F4F8;
+  --bg2: #E1EAF2;
+  --surface: #FFFFFF;
+  --surface2: #F8FAFC;
+  
+  --primary: #0073E6; 
+  --primary-light: #4D9FFF; 
+  --primary-faded: #E6F0FA; 
+  
+  --text: #1A2733;
+  --text2: #4A5B6E;
+  --text3: #7D8FA3;
+  --border: #CDE0F5;
+  
+  --shadow: 0 4px 12px rgba(0, 115, 230, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 115, 230, 0.15);
+  --radius: 12px;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+  --sidebar-w: 240px;
+  
+  --phase1: #005BB5;
+  --phase2: #0073E6;
+  --phase3: #008CFF;
+}
+
+[data-theme="dark"] {
+  --bg: #0F172A;
+  --bg2: #1E293B;
+  --surface: #1E293B;
+  --surface2: #273447;
+  
+  --primary: #3399FF;
+  --primary-light: #66B2FF;
+  --primary-faded: #132338;
+  
+  --text: #F1F5F9;
+  --text2: #CBD5E1;
+  --text3: #94A3B8;
+  --border: #334155;
+  
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  
+  --phase1: #3399FF;
+  --phase2: #66B2FF;
+  --phase3: #99CCFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* HEADER */
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 0 28px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 16px rgba(0, 115, 230, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background var(--transition);
+}
+
+[data-theme="dark"] header {
+  background: var(--surface);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border);
+}
+.header-brand { display: flex; align-items: center; gap: 14px; }
+.header-seal{
+    width: 75px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background var(--transition), box-shadoe var(--transition);
+}
+/*.header-seal {
+  width: 42px; height: 42px;
+  background: #ffffff; 
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden; 
+  padding: 2px; 
+}*/
+[data-theme="dark"] .header-seal { 
+    background: transparent; 
+    box-shadow: none;
+} 
+.header-text h1 {
+  font-family: 'Montserrat', serif;
+  font-size: 16px; font-weight: 700; letter-spacing: .3px;
+  text-transform: uppercase
+}
+.header-text p { font-size: 11px; opacity: .85; letter-spacing: .6px; text-transform: uppercase; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.btn-toggle {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff; border-radius: 8px;
+  padding: 7px 14px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: background var(--transition);
+}
+.btn-toggle:hover { background: rgba(255,255,255,0.25); }
+
+/*BANNER TOPO*/
+.top-banner {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--text2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  z-index: 90;
+}
+.top-banner i {
+  color: var(--primary);
+  font-size: 16px;
+}
+.top-banner strong {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: var(--primary-faded);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-left: 4px;
+}
+
+/* LAYOUT */
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* NAVEGAÇÃO LATERAL */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 14px;
+  display: flex; flex-direction: column; gap: 8px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  transition: background var(--transition), border var(--transition);
+}
+.sidebar-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--primary);
+  padding: 0 10px; margin-bottom: 4px;
+}
+[data-theme="dark"] .sidebar-label { color: var(--primary-light); }
+.phase-btn {
+  width: 100%; text-align: left;
+  background: none; border: 1.5px solid transparent;
+  border-radius: 10px; padding: 11px 14px;
+  cursor: pointer; color: var(--text2);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13.5px; font-weight: 500;
+  display: flex; align-items: center; gap: 10px;
+  transition: all var(--transition);
+  position: relative;
+}
+.phase-btn .phase-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; transition: transform var(--transition);
+}
+.phase-btn:hover { background: var(--bg2); color: var(--text); }
+.phase-btn.active {
+  background: var(--primary-faded);
+  border-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+.phase-btn.active .phase-dot { transform: scale(1.4); }
+.phase-btn[data-phase="0"] .phase-dot { background: var(--phase1); }
+.phase-btn[data-phase="1"] .phase-dot { background: var(--phase2); }
+.phase-btn[data-phase="2"] .phase-dot { background: var(--phase3); }
+.phase-steps-count {
+  margin-left: auto;
+  font-size: 10px;
+  background: var(--bg2);
+  padding: 2px 7px; border-radius: 20px;
+  color: var(--text3);
+}
+.phase-btn.active .phase-steps-count {
+  background: var(--primary);
+  color: #fff;
+}
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 8px 0; }
+.sidebar-info {
+  margin-top: auto;
+  padding: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px; color: var(--text2);
+  line-height: 1.5;
+}
+.sidebar-info i { color: var(--primary); margin-right: 6px; font-size: 14px; }
+.sidebar-info strong { color: var(--text); display: block; margin-bottom: 4px; }
+
+/* MAIN */
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER FASES*/
+.phase-header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+.phase-title {
+  display: flex; align-items: center; gap: 16px;
+}
+.phase-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #fff; flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
+.phase-icon.p0 { background: var(--phase1); }
+.phase-icon.p1 { background: var(--phase2); }
+.phase-icon.p2 { background: var(--phase3); }
+.phase-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700; color: var(--text);
+}
+.phase-sub { font-size: 14px; color: var(--text3); margin-top: 2px; }
+
+.btn-export {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--text2); border-radius: 9px;
+  padding: 8px 16px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+.btn-export:hover { border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow); }
+
+/* 3-COL GRID */
+.cols-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 24px;
+  align-items: start;
+}
+.col-header {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text3);
+  padding: 0 0 12px;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.col-header i { font-size: 13px; color: var(--primary); }
+
+/* ATORES */
+.actor-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 12px;
+  cursor: default;
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.actor-card:hover { transform: translateX(4px); border-color: var(--primary-light); }
+.actor-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--primary-faded);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary); font-size: 14px; flex-shrink: 0;
+}
+.actor-name { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.actor-role { font-size: 11.5px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
+
+/* FLUXO ETAPAS */
+.step-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.step-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.step-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.step-badge {
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 10.5px; font-weight: 700;
+  color: #fff;
+}
+.step-badge.p0 { background: var(--phase1); }
+.step-badge.p1 { background: var(--phase2); }
+.step-badge.p2 { background: var(--phase3); }
+.step-title {
+  font-size: 16px; font-weight: 600; color: var(--text);
+  margin-bottom: 6px;
+}
+.step-desc { font-size: 13.5px; color: var(--text2); line-height: 1.6; }
+
+.step-card-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 12px; color: var(--primary); font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* SETAS ENTRE ETAPAS */
+.step-arrow {
+  text-align: center; 
+  padding: 8px 0;
+  color: var(--primary-light); 
+  font-size: 20px;
+  animation: floatArrow 2s infinite ease-in-out;
+}
+@keyframes floatArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ARTEFATOS */
+.artifact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.artifact-card:hover { border-color: var(--primary); transform: translateX(-4px); }
+.artifact-name {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.4;
+}
+.artifact-name i { color: var(--primary-light); margin-top: 2px; flex-shrink: 0; font-size: 14px;}
+.artifact-step { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+/* TOOLTIP */
+.tooltip {
+  position: fixed; z-index: 200;
+  background: var(--surface);
+  border: 1.5px solid var(--primary);
+  border-radius: 10px; padding: 14px 18px;
+  box-shadow: var(--shadow-lg);
+  max-width: 280px;
+  font-size: 12.5px; color: var(--text2); line-height: 1.5;
+  pointer-events: none;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 150ms, transform 150ms;
+}
+.tooltip.show { opacity: 1; transform: translateY(0); }
+.tooltip-title { font-weight: 700; color: var(--primary); margin-bottom: 6px; font-size: 14px; }
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0, 30, 60, 0.5); 
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 250ms ease;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 115, 230, 0.15);
+  max-width: 650px; width: 100%;
+  max-height: 85vh; overflow-y: auto;
+  transform: scale(.96) translateY(12px);
+  transition: transform 250ms cubic-bezier(.4,0,.2,1);
+}
+.modal-backdrop.open .modal { transform: scale(1) translateY(0); }
+.modal-header {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  position: sticky; top: 0;
+  background: var(--surface);
+  border-radius: 16px 16px 0 0;
+  z-index: 10;
+}
+.modal-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); }
+.modal-subtitle { font-size: 13px; color: var(--text3); margin-top: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;}
+.modal-close {
+  background: var(--bg2); border: none; cursor: pointer;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); flex-shrink: 0;
+  transition: all var(--transition);
+}
+.modal-close:hover { background: var(--primary-faded); color: var(--primary); transform: rotate(90deg); }
+.modal-body { padding: 24px 28px 32px; display: flex; flex-direction: column; gap: 24px; }
+.modal-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--primary); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.modal-desc { font-size: 14.5px; color: var(--text2); line-height: 1.7; text-align: justify; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-tag {
+  padding: 6px 12px; border-radius: 8px;
+  font-size: 12.5px; font-weight: 500;
+  background: var(--primary-faded); color: var(--text);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+}
+.modal-tag.actor i, .modal-tag.artifact i { color: var(--primary); }
+
+/* ANIMAÇÕES */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim { animation: fadeInUp 300ms ease both; }
+.anim-d1 { animation-delay: 50ms; }
+.anim-d2 { animation-delay: 100ms; }
+.anim-d3 { animation-delay: 150ms; }
+.anim-d4 { animation-delay: 200ms; }
+.anim-d5 { animation-delay: 250ms; }
+
+/* RESPONSIVIDADE */
+@media (max-width: 1023px) {
+  .sidebar { width: 70px; padding: 20px 8px; }
+  .sidebar-label, .phase-steps-count, .sidebar-info, .sidebar-divider, .phase-btn span { display: none; }
+  .phase-btn { padding: 12px; justify-content: center; }
+  .phase-btn .phase-dot { width: 10px; height: 10px; }
+  .cols-grid { grid-template-columns: 1fr 1fr; }
+  .cols-grid > :last-child { grid-column: 1/-1; }
+}
+@media (max-width: 767px) {
+  main { padding: 20px; }
+  .cols-grid { grid-template-columns: 1fr; }
+  .cols-grid > :last-child { grid-column: auto; }
+  .phase-header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-seal">
+      <img src="logo-tse.png" alt="Logo TSE" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+    <div class="header-text">
+      <h1>Secretaria de Auditoria</h1>
+      <p>Tribunal Superior Eleitoral</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+      <i class="fa-solid fa-circle-half-stroke" id="theme-icon"></i>
+      <span id="theme-label">Modo Escuro</span>
+    </button>
+  </div>
+</header>
+
+<div class="top-banner" aria-label="Contexto do processo mapeado">
+  <i class="fa-solid fa-scale-balanced"></i>
+  <span><strong>AUDITORIA ORDINÁRIA</strong></span>
+</div>
+
+<div class="app-body">
+  <nav class="sidebar" role="navigation" aria-label="Fases da Auditoria Ordinária">
+    <div class="sidebar-label">Fases</div>
+    <button class="phase-btn active" data-phase="0" onclick="setPhase(0)" aria-label="Fase Planejamento">
+      <span class="phase-dot"></span>
+      <span>Planejamento</span>
+      <span class="phase-steps-count">3 etapas</span>
+    </button>
+    <button class="phase-btn" data-phase="1" onclick="setPhase(1)" aria-label="Fase Execução">
+      <span class="phase-dot"></span>
+      <span>Execução</span>
+      <span class="phase-steps-count">2 etapas</span>
+    </button>
+    <button class="phase-btn" data-phase="2" onclick="setPhase(2)" aria-label="Fase Encerramento">
+      <span class="phase-dot"></span>
+      <span>Encerramento</span>
+      <span class="phase-steps-count">2 etapas</span>
+    </button>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-info">
+      <strong><i class="fa-solid fa-lightbulb"></i> Como usar</strong>
+      Selecione as etapas no fluxo central para compreender os objetivos, atores envolvidos e documentos elaborados.
+    </div>
+  </nav>
+
+  <main id="main-area" role="main" aria-label="Conteúdo principal"></main>
+</div>
+
+<div class="tooltip" id="tooltip" role="tooltip" aria-hidden="true">
+  <div class="tooltip-title" id="tooltip-title"></div>
+  <div id="tooltip-body"></div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+        <div class="modal-title" id="modal-title-text"></div>
+      </div>
+      <button class="modal-close" onclick="closeModalDirect()" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// DADOS
+const PHASES = [
+  {
+    name: "Planejamento",
+    icon: "fa-solid fa-compass-drafting",
+    cls: "p0",
+    steps: [
+      {
+        title: "Levantamento de Informações Preliminares",
+        desc: "Abertura formal do processo de auditoria com definição de equipe e emissão do memorando.",
+        fullDesc: "A Seção de Auditoria inicia o processo identificando a área auditada e a necessidade de auditoria ordinária, define a equipe responsável, elabora a minuta do Memorando de Abertura e encaminha para análise. A COAUD/COAUG verifica a minuta, podendo aprovar ou devolver com ajustes. Após aprovação da COAUD, a SAU analisa e aprova em caráter definitivo, gerando o Memorando de Abertura oficial que formaliza o início dos trabalhos.",
+        actors: ["Seção de Auditoria", "COAUD/COAUG", "SAU"],
+        artifacts: ["Memorando de Abertura"]
+      },
+      {
+        title: "Mapeamento do processo",
+        desc: "Coleta de informações, elaboração do Levantamento de Documentos e do Plano de Trabalho.",
+        fullDesc: "A Equipe de Auditoria realiza a coleta de informações sobre o processo auditado, elaborando o Levantamento de Documentos do Processo e o Plano de Trabalho. A Seção de Auditoria analisa os documentos produzidos e, se necessário, devolve para ajustes. Após validação da Seção, a COAUD/COAUG realiza análise, podendo aprovar ou solicitar revisões. Em seguida, a SAU efetua análise final com possíveis devoluções. A Ata de Reunião registra decisões relevantes.",
+        actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+        artifacts: ["Levantamento de Documentos do Processo", "Plano de Trabalho"]
+      },
+      {
+        title: "Identificação de Objetivos-Chave, Riscos e Controle",
+        desc: "Reunião de abertura com o Auditado, mapeamento do processo e elaboração das matrizes de controle e riscos.",
+        fullDesc: "Realiza-se a Reunião de Abertura com o Auditado para apresentação da equipe e escopo da auditoria ordinária. A Equipe elabora o Mapeamento do Processo com o auxílio do Auditado. Em seguida, elabora a Matriz de Controles, a Matriz de Riscos e a Matriz Testes de Controle. Com base nesses insumos, é desenhado o Programa de Auditoria. Todos os documentos passam por um ciclo de análise pela Seção de Auditoria, pela COAUD e pela SAU, com possibilidade de devoluções e ajustes até a aprovação definitiva que autoriza o início da execução.",
+        actors: ["Auditado", "Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+        artifacts: ["Mapeamento do Processo", "Matriz de Riscos", "Matriz de Controle", "Matriz Testes de Controle", "Programa de Auditoria"]
+      }
+    ]
+  },
+  {
+    name: "Execução",
+    icon: "fa-solid fa-gears",
+    cls: "p1",
+    steps: [
+      {
+        title: "Aplicação de Testes de Auditoria e Achados Preliminares",
+        desc: "Execução dos testes de auditoria e elaboração do Quadro de Achados para encaminhamento ao Auditado.",
+        fullDesc: "Nesta etapa, a Equipe de Auditoria aplica os testes previstos no Programa de Auditoria, gerando o documento de Aplicação de Testes. Com base nos resultados e evidências coletadas, elabora-se o Quadro de Achados, identificando inconformidades, riscos materializados e oportunidades de melhoria. O Quadro de Achados é avaliado sucessivamente pela Seção de Auditoria, COAUD/COAUG e SAU. Somente após a aprovação, o documento é formalmente encaminhado ao Auditado.",
+        actors: ["Equipe de Auditoria", "Auditado", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+        artifacts: ["Aplicação de Testes", "Quadro de Achados"]
+      },
+      {
+        title: "Resposta do Auditado",
+        desc: "O Auditado analisa o Quadro de Achados e elabora suas respostas e justificativas no prazo definido.",
+        fullDesc: "O Auditado recebe formalmente o Quadro de Achados e possui um prazo regulamentar para apresentar suas respostas. Para cada achado identificado, o gestor da área deve elaborar uma manifestação clara, apresentando justificativas documentadas ou propondo medidas saneadoras imediatas. As respostas retornam à Equipe de Auditoria para continuidade do processo.",
+        actors: ["Auditado"],
+        artifacts: ["Resposta ao Quadro de Achados"]
+      }
+    ]
+  },
+  {
+    name: "Comunicação",
+    icon: "fa-solid fa-file-contract",
+    cls: "p2",
+    steps: [
+      {
+        title: "Relatório de Auditoria",
+        desc: "Consolidação dos achados, respostas e elaboração do Relatório Final e Sumário Executivo.",
+        fullDesc: "A Equipe de Auditoria avalia criticamente as respostas enviadas pelo Auditado. Com base nessa análise final, elabora o Relatório de Auditoria e o Sumário Executivo. Apenas após a aprovação da Alta Administração, o Relatório e o Sumário são publicados e formalmente enviados ao Auditado.",
+        actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
+        artifacts: ["Relatório de Auditoria", "Sumário Executivo"]
+      },
+      {
+        title: "Plano de Ação",
+        desc: "O Auditado recebe o Relatório, verifica a necessidade de Plano de Ação e pactua as correções com a Equipe.",
+        fullDesc: "De posse do Relatório Final e Sumário Executivo, o Auditado verifica as recomendações expedidas. Caso a unidade não possua um plano corretivo em andamento, deve elaborar um Plano de Ação detalhando medidas, responsáveis, prazos de implementação e indicadores de sucesso. A Equipe de Auditoria valida o Plano para garantir que as ações propostas são suficientes para mitigar os riscos e sanar os achados apontados no relatório.",
+        actors: ["Auditado", "Equipe de Auditoria"],
+        artifacts: ["Plano de Ação"]
+      }
+    ]
+  }
+];
+
+const ACTOR_META = {
+  "Auditado": { icon: "fa-solid fa-building-columns", role: "Unidade ou setor sob auditoria" },
+  "Equipe de Auditoria": { icon: "fa-solid fa-users", role: "Servidores responsáveis pela execução" },
+  "Seção de Auditoria": { icon: "fa-solid fa-sitemap", role: "Supervisão técnica inicial" },
+  "COAUD/COAUG": { icon: "fa-solid fa-user-tie", role: "Coordenação de Auditoria e Controle" },
+  "COAUD": { icon: "fa-solid fa-user-tie", role: "Coordenação de Auditoria" },
+  "SAU": { icon: "fa-solid fa-landmark", role: "Secretaria de Auditoria" },
+  "DG": { icon: "fa-solid fa-star", role: "Diretoria-Geral (Alta Administração)" }
+};
+
+const ARTIFACT_DESC = {
+  "Memorando de Abertura": "Documento formal que comunica o início oficial dos trabalhos de auditoria.",
+  "Levantamento de Documentos": "Compilação de regulamentos, manuais e histórico necessários para conhecer a área.",
+  "Levantamento de Documentos do Processo": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
+  "Plano de Trabalho": "Guia que define o escopo, cronograma, recursos e responsabilidades da auditoria.",
+  "Ata de Reunião": "Registro formal que documenta o que foi discutido e acordado entre as partes.",
+  "Mapeamento do Processo": "Representação visual ou descritiva do fluxo de trabalho da unidade auditada.",
+  "Matriz de Riscos": "Ferramenta que avalia a probabilidade e o impacto de eventos adversos no processo.",
+  "Matriz de Controle": "Mapeamento das travas e verificações existentes para mitigar os riscos identificados.",
+  "Matriz Testes de Controle": "Planejamento metodológico de como a equipe testará a eficácia dos controles.",
+  "Programa de Auditoria": "O 'passo a passo' técnico, detalhando os procedimentos exatos que a equipe executará.",
+  "Aplicação de Testes": "Os papéis de trabalho gerados durante a execução técnica do Programa de Auditoria.",
+  "Quadro de Achados": "Planilha consolidando a situação encontrada (condição) em contraste com a norma (critério).",
+  "Resposta ao Quadro de Achados": "Documento onde o gestor auditado apresenta sua defesa, justificativas ou concordância.",
+  "Relatório de Auditoria": "Documento extenso e detalhado que narra toda a auditoria, achados e conclusões.",
+  "Sumário Executivo": "Documento destinado à alta administração com os principais pontos de melhoria, o posicionamento da auditoria sobre o processo auditado e as recomendações expedidas",
+  "Plano de Ação": "Acordo de melhoria com tarefas, prazos e donos definidos para resolver os achados."
+};
+
+// ESTADO
+let currentPhase = 0;
+let dark = false;
+
+// RENDERIZADOR
+function render() {
+  const phase = PHASES[currentPhase];
+  const allActors = [...new Set(phase.steps.flatMap(s => s.actors))];
+  const allArtifacts = phase.steps.flatMap((s, si) =>
+    s.artifacts.map(a => ({ name: a, step: si + 1 }))
+  );
+
+  document.getElementById('main-area').innerHTML = `
+    <div class="phase-header anim">
+      <div class="phase-title">
+        <div class="phase-icon ${phase.cls}"><i class="${phase.icon}"></i></div>
+        <div>
+          <div class="phase-name">${phase.name}</div>
+          <div class="phase-sub">Compreenda as ${phase.steps.length} etapas centrais, ${allActors.length} papéis de atuação e ${allArtifacts.length} artefatos gerados.</div>
+        </div>
+      </div>
+      <div>
+        <button class="btn-export" onclick="exportPhase()" aria-label="Exportar Mapa do Processo">
+          <i class="fa-solid fa-file-pdf"></i> Baixar Mapa Estrutural
+        </button>
+      </div>
+    </div>
+
+    <div class="cols-grid">
+      <div>
+        <div class="col-header"><i class="fa-solid fa-users"></i> Papéis de Atuação</div>
+        ${allActors.map((a, i) => {
+          const meta = ACTOR_META[a] || { icon: "fa-solid fa-user", role: "" };
+          return `<div class="actor-card anim anim-d${Math.min(i+1,5)}" aria-label="Ator: ${a}">
+            <div class="actor-icon"><i class="${meta.icon}"></i></div>
+            <div>
+              <div class="actor-name">${a}</div>
+              <div class="actor-role">${meta.role}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <div>
+        <div class="col-header"><i class="fa-solid fa-diagram-project"></i> Fluxo de Processos</div>
+        ${phase.steps.map((step, si) => `
+          <div class="step-card anim anim-d${Math.min(si+1,5)}"
+               onclick="openStepModal(${si})"
+               aria-label="Etapa ${si+1}: ${step.title}"
+               role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')openStepModal(${si})">
+            <div class="step-num">
+              <span class="step-badge ${phase.cls}">Etapa ${si+1}</span>
+            </div>
+            <div class="step-title">${step.title}</div>
+            <div class="step-desc">${step.desc}</div>
+            <div class="step-card-footer"><i class="fa-solid fa-book-open"></i> Explorar Detalhes</div>
+          </div>
+          ${si < phase.steps.length - 1 ? '<div class="step-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>' : ''}
+        `).join('')}
+      </div>
+
+      <div>
+        <div class="col-header"><i class="fa-solid fa-file-lines"></i> Artefatos Produzidos</div>
+        ${allArtifacts.map((a, i) => `
+          <div class="artifact-card anim anim-d${Math.min(i+1,5)}"
+               onmouseenter="showTooltip(event,'${a.name}')"
+               onmouseleave="hideTooltip()"
+               onclick="showTooltip(event,'${a.name}',true)"
+               aria-label="Artefato: ${a.name}">
+            <div class="artifact-name"><i class="fa-solid fa-file-invoice"></i> ${a.name}</div>
+            <div class="artifact-step">Relativo à Etapa ${a.step}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// TROCA DE FASE
+function setPhase(idx) {
+  currentPhase = idx;
+  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.phase-btn[data-phase="${idx}"]`).classList.add('active');
+  render();
+}
+
+// MODAL
+function openStepModal(si) {
+  const phase = PHASES[currentPhase];
+  const step = phase.steps[si];
+
+  document.getElementById('modal-title-text').textContent = step.title;
+  document.getElementById('modal-subtitle').textContent = `Fase de ${phase.name} · Etapa ${si + 1}`;
+
+  document.getElementById('modal-body').innerHTML = `
+    <div>
+      <div class="modal-section-title"><i class="fa-solid fa-align-left"></i> Entendendo a Etapa</div>
+      <div class="modal-desc">${step.fullDesc}</div>
+    </div>
+    <div>
+      <div class="modal-section-title"><i class="fa-solid fa-users-gear"></i> Quem participa</div>
+      <div class="modal-tags">
+        ${step.actors.map(a => `<span class="modal-tag actor"><i class="fa-solid fa-user"></i> ${a}</span>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="modal-section-title"><i class="fa-solid fa-folder-open"></i> O que é produzido</div>
+      <div class="modal-tags">
+        ${step.artifacts.map(a => `<span class="modal-tag artifact"><i class="fa-solid fa-file-invoice"></i> ${a}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.getElementById('modal-box').setAttribute('aria-label', step.title);
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// TOOLTIP
+let tooltipTimer;
+function showTooltip(e, name, click = false) {
+  clearTimeout(tooltipTimer);
+  const tt = document.getElementById('tooltip');
+  const desc = ARTIFACT_DESC[name] || "Documento pertinente a esta etapa do fluxo de auditoria.";
+  document.getElementById('tooltip-title').textContent = name;
+  document.getElementById('tooltip-body').textContent = desc;
+  const rect = e.currentTarget.getBoundingClientRect();
+  let top = rect.bottom + 8;
+  let left = rect.left;
+  if (left + 280 > window.innerWidth) left = window.innerWidth - 290;
+  if (top + 100 > window.innerHeight) top = rect.top - 110;
+  tt.style.top = top + 'px';
+  tt.style.left = left + 'px';
+  tt.classList.add('show');
+  tt.setAttribute('aria-hidden', 'false');
+  if (!click) { tooltipTimer = setTimeout(hideTooltip, 4000); }
+}
+function hideTooltip() {
+  const tt = document.getElementById('tooltip');
+  tt.classList.remove('show');
+  tt.setAttribute('aria-hidden', 'true');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.artifact-card')) hideTooltip();
+});
+
+// EXPORT
+function exportPhase() {
+  const phase = PHASES[currentPhase];
+  const summary = {
+    Apresentacao: "Processo de Auditoria Ordinária - TSE",
+    Fase: phase.name,
+    Etapas: phase.steps.map((s, si) => ({
+      Numero: si + 1,
+      Titulo: s.title,
+      Descricao: s.fullDesc,
+      Atores_Envolvidos: s.actors,
+      Artefatos_Gerados: s.artifacts
+    })),
+    GeradoEm: new Date().toLocaleString('pt-BR')
+  };
+  const el = document.createElement('a');
+  el.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(summary, null, 2));
+  el.download = `Estrutura_Auditoria_Ordinaria_${phase.name.toLowerCase()}.json`;
+  el.click();
+}
+
+// TEMA
+function toggleTheme() {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('theme-label').textContent = dark ? 'Modo Claro' : 'Modo Escuro';
+  document.getElementById('theme-icon').className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-circle-half-stroke';
+}
+
+// INICIALIZAÇÃO
+render();
+</script>
+</body>
+</html>

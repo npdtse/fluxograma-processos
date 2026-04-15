@@ -1,0 +1,61 @@
+FLUXOGRAMA DE PROCESSOS: AUDITORIA DE CONTAS PRÉ DO ENCERRAMENTO
+1. FASE DE PLANEJAMENTO Descrição da Etapa: O planejamento é um processo contínuo indispensável à definição do objetivo e do escopo da auditoria, consistindo em um plano de ação estruturado 
+. Diferente da auditoria contínua, esta modalidade foca no ambiente contábil e nas demonstrações financeiras 
+. A equipe identifica a materialidade dos recursos, elabora a estratégia geral para examinar as contas e foca em avaliar se os controles internos estabelecidos pela instituição oferecem segurança razoável antes do fechamento 
+.
+Passo 1: Início e Abertura Formal
+O que faz: Abertura formal da auditoria por meio de um documento que comunica o início oficial dos trabalhos na entidade a ser auditada 
+.
+Atores: Seção de Auditoria, COAUD/COAUG e SAU 
+.
+Processo: O processo é iniciado pela Seção de Auditoria, que define a Equipe de Auditoria e elabora a minuta do memorando 
+. Em seguida, o documento segue sequencialmente para análise e aprovação da COAUD/COAUG e da SAU (Secretaria de Auditoria), o que consolida a abertura 
+.
+Artefato Produzido: Memorando de Abertura 
+.
+Passo 2: Entendimento, Estratégia e Materialidade
+O que faz: A equipe analisa profundamente a unidade auditada e seu ambiente financeiro, formula um plano guia contendo recursos e responsabilidades, e define o volume financeiro aceitável ou crítico (materialidade) que norteará os esforços 
+.
+Atores: Equipe de Auditoria, Seção de Auditoria, COAUD/COAUG e SAU 
+.
+Processo: A Equipe de Auditoria levanta informações produzindo o entendimento do ambiente e das contas específicas, bem como a estratégia geral da auditoria e a materialidade 
+. Todo esse conjunto sustenta a elaboração do documento "Plano de Trabalho", que será analisado pela Seção de Auditoria, COAUD/COAUG e SAU 
+. Caso seja reprovado por alguma dessas instâncias, retorna para ajustes da equipe até ser aprovado integralmente 
+.
+Artefatos Produzidos: Plano de Trabalho, Definição de Materialidade, Estratégia Geral de Auditoria, Entendimento da Entidade/Ambiente e Entendimento Específicos das Contas 
+.
+Passo 3: Controles Internos e Programa de Auditoria
+O que faz: A equipe avalia o funcionamento do controle interno da unidade e, com base nisso, redige um roteiro técnico que detalha os procedimentos exatos a serem executados na etapa de campo 
+.
+Atores: Equipe de Auditoria, Seção de Auditoria, COAUD/COAUG e SAU 
+.
+Processo: A Equipe de Auditoria avalia o controle interno contábil da unidade e elabora o "Programa de Auditoria", estabelecendo o passo a passo dos exames 
+. Este material é submetido à revisão da Seção de Auditoria e, posteriormente, da COAUD/COAUG e SAU, sendo devolvido para correções até a aprovação final pela SAU 
+.
+Artefatos Produzidos: Avaliação do Controle Interno e Programa de Auditoria 
+.
+
+--------------------------------------------------------------------------------
+2. FASE DE EXECUÇÃO Descrição da Etapa: Consiste no trabalho de campo para aplicar os testes definidos no programa de auditoria com a finalidade de reunir evidências e registrar os achados 
+. Na "Pré do Encerramento", não existe fase autônoma de Comunicação nos artefatos normativos; todo o processo de identificação de falhas financeiras e a notificação aos gestores para a regularização antes do fechamento ocorrem intrinsecamente ao final desta fase 
+.
+Passo 1: Execução Técnica e Comunicação de Distorções
+O que faz: A equipe realiza exames práticos usando os procedimentos definidos, solicita documentos adicionais e documenta quaisquer distorções materiais e falhas de saldos encontradas para comunicá-las imediatamente à gestão 
+.
+Atores: Equipe de Auditoria, Seção de Auditoria, COAUD/COAUG, SAU e Auditado 
+.
+Processo: A Equipe de Auditoria aplica os testes gerando os papéis de trabalho correspondentes e utiliza requisições formais para obter documentos complementares ou justificativas 
+. Ao consolidar as falhas, a equipe redige o relatório apontando os erros materiais na contabilidade, que é sucessivamente revisado pela Seção de Auditoria, COAUD/COAUG e SAU 
+. Estando aprovado, é formalmente remetido ao Auditado 
+.
+Artefatos Produzidos: Aplicação de Testes, Requisições e Relatório de Comunicação de Distorções Relevantes 
+.
+Passo 2: Defesa e Manifestação do Gestor
+O que faz: É a etapa em que o gestor auditado apresenta as suas explicações, provas adicionais, concordância ou medidas de correção imediata frente às distorções contábeis apontadas pela equipe de auditoria 
+.
+Atores: Auditado 
+.
+Processo: O gestor auditado, após receber o aviso de distorções contábeis e no prazo estipulado, formula e encaminha o documento contendo a sua defesa oficial e as justificativas aplicáveis aos apontamentos realizados pelos auditores 
+.
+Artefato Produzido: Resposta ao Quadro de Achados 
+.

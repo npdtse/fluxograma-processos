@@ -1,0 +1,78 @@
+FLUXOGRAMA DE PROCESSOS: AUDITORIA CONTÍNUA
+Abaixo apresento o fluxograma detalhado para a Auditoria Contínua, inspirado na estrutura de passos, atores e processos estabelecidos para os procedimentos de auditoria
+. O fluxo está dividido em Planejamento, Execução e Comunicação/Relatório, contendo as descrições de cada etapa e os respectivos artefatos produzidos
+.
+1. FASE DE PLANEJAMENTO
+Descrição da Etapa: O planejamento é um processo dinâmico e contínuo, indispensável para o sucesso do trabalho, que envolve o levantamento de informações e a análise preliminar do objeto para identificar pontos críticos
+. Nesta fase, a equipe mapeia os processos, compreende os controles internos adotados pela gestão e avalia os riscos inerentes para calcular o risco residual
+. O objetivo final é definir o escopo do trabalho e elaborar um plano de ação estruturado
+.
+Passo 1: Abertura Formal
+Processo: A Seção de Auditoria define a equipe e elabora a minuta que comunica oficialmente o início dos trabalhos
+. O documento segue para aprovação nas instâncias superiores (COAUD/COAUG e SAU)
+.
+Atores: Seção de Auditoria, COAUD/COAUG e SAU.
+Artefato Produzido: Memorando de Abertura (documento formal de comunicação de início)
+.
+Passo 2: Levantamento e Estruturação do Trabalho
+Processo: A Equipe de Auditoria faz uma coleta aprofundada de normativos e evidências, definindo o escopo, cronograma, recursos e responsabilidades do trabalho
+. O plano formulado é submetido a uma cadeia de aprovações (Seção de Auditoria > COAUD/COAUG > SAU) e ajustado caso reprovado em alguma instância
+. Reuniões podem ser formalizadas neste momento para acordos entre as partes
+.
+Atores: Equipe de Auditoria, Seção de Auditoria, COAUD/COAUG e SAU
+.
+Artefatos Produzidos: Levantamento e Documentos do Processo, Plano de Trabalho e Ata de Reunião
+.
+Passo 3: Mapeamento, Avaliação de Riscos e Programa de Auditoria
+Processo: A equipe realiza uma reunião de abertura com o auditado e inicia o desenho da sequência de atividades do processo para identificar os participantes, atribuições, lacunas e riscos
+. Com o auxílio do gestor auditado, avalia-se a probabilidade e o impacto de eventos adversos, mapeando as travas existentes (controles) e definindo a metodologia de como testar a eficácia desses controles
+. Por fim, desenvolve-se um passo a passo técnico detalhando os procedimentos exatos da auditoria, que deve ser aprovado por todas as instâncias superiores
+.
+Atores: Auditado, Equipe de Auditoria, Seção de Auditoria, COAUD e SAU
+.
+Artefatos Produzidos: Mapeamento do Processo, Matriz de Riscos, Matriz de Controle, Matriz Testes de Controle e Programa de Auditoria
+.
+
+--------------------------------------------------------------------------------
+2. FASE DE EXECUÇÃO
+Descrição da Etapa: A execução consiste em colocar em prática o que foi definido no Programa de Auditoria
+. É o trabalho de campo onde a equipe aplica testes, utiliza técnicas de coleta e análise de dados, e reúne evidências para comprovar a existência de conformidade ou não conformidade (erros, fraudes ou irregularidades)
+.
+Passo 1: Aplicação de Testes e Levantamento de Achados
+Processo: A Equipe de Auditoria executa os testes gerando papéis de trabalho técnico e, a partir das evidências, elabora uma planilha consolidando a situação encontrada (condição) em contraste com o que diz a norma (critério)
+. O resultado é avaliado pela Seção de Auditoria, COAUD/COAUG e SAU; se aprovado, é enviado ao Auditado
+.
+Atores: Equipe de Auditoria, Auditado, Seção de Auditoria, COAUD/COAUG e SAU
+.
+Artefatos Produzidos: Aplicação de Testes e Quadro de Achados
+.
+Passo 2: Defesa do Gestor Auditado
+Processo: Após receber as situações documentadas pela auditoria, o Auditado tem um prazo definido para apresentar suas defesas, concordâncias ou justificativas
+.
+Atores: Auditado
+.
+Artefato Produzido: Resposta ao Quadro de Achados
+.
+
+--------------------------------------------------------------------------------
+3. FASE DE COMUNICAÇÃODescrição da Etapa: Representa o ápice do ciclo de auditoria, onde se concretiza e se informa à organização o resultado do trabalho executado
+. A finalidade é estabelecer um meio claro e conciso de comunicação entre os auditores, a alta administração e as unidades auditadas, visando melhorias
+.
+Passo 1: Relatoria e Resumo para a Alta Administração
+Processo: A Equipe de Auditoria recebe e analisa as respostas do auditado
+. A partir disso, redige-se um documento extenso narrando toda a auditoria e as conclusões, e outro documento conciso focado na alta administração contendo os principais pontos de melhoria e recomendações
+. Esses documentos sobem para aprovação nas instâncias de Seção, COAUD/COAUG, SAU e Diretoria Geral (DG), que os encaminha ao Auditado após aprovados
+.
+Atores: Equipe de Auditoria, Seção de Auditoria, COAUD/COAUG, SAU e DG
+.
+Artefatos Produzidos: Relatório de Auditoria e Sumário Executivo
+.
+Passo 2: Tratamento de Recomendações (Plano de Ação)
+Processo: Ao receber os relatórios finais, o Auditado verifica a necessidade de formular um acordo de melhoria para solucionar os achados encontrados
+. Ele define as tarefas, prazos e donos para cada problema, documento que é submetido ao "OK" da Equipe de Auditoria para ser implementado
+.
+Atores: Auditado e Equipe de Auditoria
+.
+Artefato Produzido: Plano de Ação
+. (Nota: O Plano de Ação consta nos normativos de descrição dos processos de melhoria após a fase de relato
+, embora seja gerado primariamente pela área gerencial auditada).

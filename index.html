@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apresentação: Fluxo de Auditoria Ordinária – TSE</title>
+<title>Hub de Processos de Auditoria – TSE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -94,18 +94,9 @@ header {
 .header-seal{
     width: 75px;
     display: flex; align-items: center; justify-content: center;
-    transition: background var(--transition), box-shadoe var(--transition);
+    transition: background var(--transition), box-shadow var(--transition);
 }
-/*.header-seal {
-  width: 42px; height: 42px;
-  background: #ffffff; 
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  overflow: hidden; 
-  padding: 2px; 
-}*/
+
 [data-theme="dark"] .header-seal { 
     background: transparent; 
     box-shadow: none;
@@ -113,7 +104,7 @@ header {
 .header-text h1 {
   font-family: 'Montserrat', serif;
   font-size: 16px; font-weight: 700; letter-spacing: .3px;
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 .header-text p { font-size: 11px; opacity: .85; letter-spacing: .6px; text-transform: uppercase; }
 .header-actions { display: flex; align-items: center; gap: 10px; }
@@ -127,31 +118,60 @@ header {
 }
 .btn-toggle:hover { background: rgba(255,255,255,0.25); }
 
-/*BANNER TOPO*/
+/* TOP BANNER / NAVIGATION TABS */
 .top-banner {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 12px 28px;
+  padding: 0 28px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13.5px;
-  color: var(--text2);
+  gap: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.02);
   z-index: 90;
+  overflow-x: auto;
+  white-space: nowrap;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
-.top-banner i {
+.top-banner::-webkit-scrollbar { display: none; } /* Safari and Chrome */
+
+.top-banner > i {
   color: var(--primary);
   font-size: 16px;
+  padding: 16px 0;
+  flex-shrink: 0;
 }
-.top-banner strong {
-  color: var(--primary);
-  font-weight: 700;
+[data-theme="dark"] .top-banner > i { color: var(--primary-light); }
+
+.audit-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.audit-tab {
+  background: transparent;
+  border: none;
+  padding: 16px 14px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition);
+  text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: var(--primary-faded);
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-left: 4px;
+}
+.audit-tab:hover {
+  color: var(--primary-light);
+}
+.audit-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+[data-theme="dark"] .audit-tab.active {
+  color: var(--primary-light);
+  border-bottom-color: var(--primary-light);
 }
 
 /* LAYOUT */
@@ -390,6 +410,28 @@ main {
 .artifact-name i { color: var(--primary-light); margin-top: 2px; flex-shrink: 0; font-size: 14px;}
 .artifact-step { font-size: 11px; color: var(--text3); margin-top: 4px; }
 
+/* ESTADO VAZIO (EM CONSTRUÇÃO) */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text3);
+  height: 100%;
+}
+.empty-state i {
+  font-size: 48px;
+  color: var(--border);
+  margin-bottom: 20px;
+}
+.empty-state h2 {
+  font-size: 20px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
 /* TOOLTIP */
 .tooltip {
   position: fixed; z-index: 200;
@@ -512,29 +554,25 @@ main {
   </div>
 </header>
 
-<div class="top-banner" aria-label="Contexto do processo mapeado">
+<div class="top-banner" aria-label="Navegação de Processos de Auditoria">
   <i class="fa-solid fa-scale-balanced"></i>
-  <span><strong>AUDITORIA ORDINÁRIA</strong></span>
+  <div class="audit-tabs" id="audit-tabs-container">
+    <button class="audit-tab active" onclick="setAuditProcess('ordinaria')">Auditoria Ordinária</button>
+    <button class="audit-tab" onclick="setAuditProcess('continua')">Auditoria Contínua</button>
+    <button class="audit-tab" onclick="setAuditProcess('pre_encerramento')">Auditoria de Contas Pré-Encerramento</button>
+    <button class="audit-tab" onclick="setAuditProcess('pos_encerramento')">Auditoria de Contas Pós-Encerramento</button>
+    <button class="audit-tab" onclick="setAuditProcess('consultoria')">Consultoria</button>
+    <button class="audit-tab" onclick="setAuditProcess('monitoramento_1')">Monitoramento 1º Ciclo</button>
+    <button class="audit-tab" onclick="setAuditProcess('monitoramento_2')">Monitoramento 2º Ciclo</button>
+  </div>
 </div>
 
 <div class="app-body">
-  <nav class="sidebar" role="navigation" aria-label="Fases da Auditoria Ordinária">
-    <div class="sidebar-label">Fases</div>
-    <button class="phase-btn active" data-phase="0" onclick="setPhase(0)" aria-label="Fase Planejamento">
-      <span class="phase-dot"></span>
-      <span>Planejamento</span>
-      <span class="phase-steps-count">3 etapas</span>
-    </button>
-    <button class="phase-btn" data-phase="1" onclick="setPhase(1)" aria-label="Fase Execução">
-      <span class="phase-dot"></span>
-      <span>Execução</span>
-      <span class="phase-steps-count">2 etapas</span>
-    </button>
-    <button class="phase-btn" data-phase="2" onclick="setPhase(2)" aria-label="Fase Comunicação">
-      <span class="phase-dot"></span>
-      <span>Comunicação</span>
-      <span class="phase-steps-count">2 etapas</span>
-    </button>
+  <nav class="sidebar" role="navigation" aria-label="Fases do Processo Selecionado">
+    <div class="sidebar-label" id="sidebar-process-label">Fases</div>
+    
+    <div id="sidebar-phases-container"></div>
+    
     <div class="sidebar-divider"></div>
     <div class="sidebar-info">
       <strong><i class="fa-solid fa-lightbulb"></i> Como usar</strong>
@@ -564,79 +602,7 @@ main {
 </div>
 
 <script>
-// DADOS
-const PHASES = [
-  {
-    name: "Planejamento",
-    icon: "fa-solid fa-compass-drafting",
-    cls: "p0",
-    steps: [
-      {
-        title: "Levantamento de Informações Preliminares",
-        desc: "Abertura formal do processo de auditoria com definição de equipe e emissão do memorando.",
-        fullDesc: "A Seção de Auditoria inicia o processo identificando a área auditada e a necessidade de auditoria ordinária, define a equipe responsável, elabora a minuta do Memorando de Abertura e encaminha para análise. A COAUD/COAUG verifica a minuta, podendo aprovar ou devolver com ajustes. Após aprovação da COAUD, a SAU analisa e aprova em caráter definitivo, gerando o Memorando de Abertura oficial que formaliza o início dos trabalhos.",
-        actors: ["Seção de Auditoria", "COAUD/COAUG", "SAU"],
-        artifacts: ["Memorando de Abertura"]
-      },
-      {
-        title: "Mapeamento do processo",
-        desc: "Coleta de informações, elaboração do Levantamento de Documentos e do Plano de Trabalho.",
-        fullDesc: "A Equipe de Auditoria realiza a coleta de informações sobre o processo auditado, elaborando o Levantamento de Documentos do Processo e o Plano de Trabalho. A Seção de Auditoria analisa os documentos produzidos e, se necessário, devolve para ajustes. Após validação da Seção, a COAUD/COAUG realiza análise, podendo aprovar ou solicitar revisões. Em seguida, a SAU efetua análise final com possíveis devoluções. A Ata de Reunião registra decisões relevantes.",
-        actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-        artifacts: ["Levantamento de Documentos do Processo", "Plano de Trabalho"]
-      },
-      {
-        title: "Identificação de Objetivos-Chave, Riscos e Controle",
-        desc: "Reunião de abertura com o Auditado, mapeamento do processo e elaboração das matrizes de controle e riscos.",
-        fullDesc: "Realiza-se a Reunião de Abertura com o Auditado para apresentação da equipe e escopo da auditoria ordinária. A Equipe elabora o Mapeamento do Processo com o auxílio do Auditado. Em seguida, elabora a Matriz de Controles, a Matriz de Riscos e a Matriz Testes de Controle. Com base nesses insumos, é desenhado o Programa de Auditoria. Todos os documentos passam por um ciclo de análise pela Seção de Auditoria, pela COAUD e pela SAU, com possibilidade de devoluções e ajustes até a aprovação definitiva que autoriza o início da execução.",
-        actors: ["Auditado", "Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-        artifacts: ["Mapeamento do Processo", "Matriz de Riscos", "Matriz de Controle", "Matriz Testes de Controle", "Programa de Auditoria"]
-      }
-    ]
-  },
-  {
-    name: "Execução",
-    icon: "fa-solid fa-gears",
-    cls: "p1",
-    steps: [
-      {
-        title: "Aplicação de Testes de Auditoria e Achados Preliminares",
-        desc: "Execução dos testes de auditoria e elaboração do Quadro de Achados para encaminhamento ao Auditado.",
-        fullDesc: "Nesta etapa, a Equipe de Auditoria aplica os testes previstos no Programa de Auditoria, gerando o documento de Aplicação de Testes. Com base nos resultados e evidências coletadas, elabora-se o Quadro de Achados, identificando inconformidades, riscos materializados e oportunidades de melhoria. O Quadro de Achados é avaliado sucessivamente pela Seção de Auditoria, COAUD/COAUG e SAU. Somente após a aprovação, o documento é formalmente encaminhado ao Auditado.",
-        actors: ["Equipe de Auditoria", "Auditado", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-        artifacts: ["Aplicação de Testes", "Quadro de Achados"]
-      },
-      {
-        title: "Resposta do Auditado",
-        desc: "O Auditado analisa o Quadro de Achados e elabora suas respostas e justificativas no prazo definido.",
-        fullDesc: "O Auditado recebe formalmente o Quadro de Achados e possui um prazo regulamentar para apresentar suas respostas. Para cada achado identificado, o gestor da área deve elaborar uma manifestação clara, apresentando justificativas documentadas ou propondo medidas saneadoras imediatas. As respostas retornam à Equipe de Auditoria para continuidade do processo.",
-        actors: ["Auditado"],
-        artifacts: ["Resposta ao Quadro de Achados"]
-      }
-    ]
-  },
-  {
-    name: "Comunicação",
-    icon: "fa-solid fa-file-contract",
-    cls: "p2",
-    steps: [
-      {
-        title: "Relatório de Auditoria",
-        desc: "Consolidação dos achados, respostas e elaboração do Relatório Final e Sumário Executivo.",
-        fullDesc: "A Equipe de Auditoria avalia criticamente as respostas enviadas pelo Auditado. Com base nessa análise final, elabora o Relatório de Auditoria e o Sumário Executivo. Apenas após a aprovação da Alta Administração, o Relatório e o Sumário são publicados e formalmente enviados ao Auditado.",
-        actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
-        artifacts: ["Relatório de Auditoria", "Sumário Executivo"]
-      },
-      {
-        title: "Plano de Ação",
-        desc: "O Auditado recebe o Relatório, verifica a necessidade de Plano de Ação e pactua as correções com a Equipe.",
-        fullDesc: "De posse do Relatório Final e Sumário Executivo, o Auditado verifica as recomendações expedidas. Caso a unidade não possua um plano corretivo em andamento, deve elaborar um Plano de Ação detalhando medidas, responsáveis, prazos de implementação e indicadores de sucesso. A Equipe de Auditoria valida o Plano para garantir que as ações propostas são suficientes para mitigar os riscos e sanar os achados apontados no relatório.",
-        actors: ["Auditado", "Equipe de Auditoria"],
-        artifacts: ["Plano de Ação"]
-      }
-    ]
-  }
-];
+// --- BANCO DE DADOS GERAL DE PROCESSOS --- //
 
 const ACTOR_META = {
   "Auditado": { icon: "fa-solid fa-building-columns", role: "Unidade ou setor sob auditoria" },
@@ -651,6 +617,7 @@ const ACTOR_META = {
 const ARTIFACT_DESC = {
   "Memorando de Abertura": "Documento formal que comunica o início oficial dos trabalhos de auditoria.",
   "Levantamento de Documentos": "Compilação de regulamentos, manuais e histórico necessários para conhecer a área.",
+  "Levantamento e Documentos do Processo": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
   "Levantamento de Documentos do Processo": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
   "Plano de Trabalho": "Guia que define o escopo, cronograma, recursos e responsabilidades da auditoria.",
   "Ata de Reunião": "Registro formal que documenta o que foi discutido e acordado entre as partes.",
@@ -658,28 +625,304 @@ const ARTIFACT_DESC = {
   "Matriz de Riscos": "Ferramenta que avalia a probabilidade e o impacto de eventos adversos no processo.",
   "Matriz de Controle": "Mapeamento das travas e verificações existentes para mitigar os riscos identificados.",
   "Matriz Testes de Controle": "Planejamento metodológico de como a equipe testará a eficácia dos controles.",
-  "Programa de Auditoria": "Determina os procedimentos de testes de auditoria que serão aplicados para avaliar as evidências dos controles internos, indicados pela unidade auditada.",
+  "Programa de Auditoria": "O 'passo a passo' técnico, detalhando os procedimentos exatos que a equipe executará.",
   "Aplicação de Testes": "Os papéis de trabalho gerados durante a execução técnica do Programa de Auditoria.",
   "Quadro de Achados": "Planilha consolidando a situação encontrada (condição) em contraste com a norma (critério).",
   "Resposta ao Quadro de Achados": "Documento onde o gestor auditado apresenta sua defesa, justificativas ou concordância.",
   "Relatório de Auditoria": "Documento extenso e detalhado que narra toda a auditoria, achados e conclusões.",
-  "Sumário Executivo": "Documento destinado à alta administração com os principais pontos de melhoria, o posicionamento da auditoria sobre o processo auditado e as recomendações expedidas",
-  "Plano de Ação": "Acordo de melhoria com tarefas, prazos e donos definidos para resolver os achados."
+  "Sumário Executivo": "Documento destinado à alta administração com os principais pontos de melhoria e recomendações.",
+  "Plano de Ação": "Acordo de melhoria com tarefas, prazos e donos definidos para resolver os achados.",
+  
+  // Novos artefatos (Auditoria de Contas Pré-Encerramento)
+  "Definição de Materialidade": "Documento que define o volume financeiro aceitável ou crítico que norteará os exames contábeis.",
+  "Estratégia Geral de Auditoria": "Plano que estabelece a abordagem global, a época e a extensão da auditoria.",
+  "Entendimento da Entidade/Ambiente": "Registro da análise profunda da unidade auditada e seu contexto financeiro.",
+  "Entendimento Específicos das Contas": "Análise detalhada do ambiente financeiro e das contas específicas que serão examinadas.",
+  "Avaliação do Controle Interno": "Documento que avalia o funcionamento e a segurança dos controles internos contábeis da unidade.",
+  "Requisições": "Solicitações formais da equipe para obter documentos complementares ou justificativas do gestor.",
+  "Relatório de Comunicação de Distorções Relevantes": "Relatório imediato que aponta os erros materiais e falhas de saldos na contabilidade à gestão."
 };
 
-// ESTADO
-let currentPhase = 0;
+// Armazenamento de todos os fluxos de processos
+const AUDIT_TYPES = {
+  ordinaria: {
+    title: "Auditoria Ordinária",
+    phases: [
+      {
+        name: "Planejamento", icon: "fa-solid fa-compass-drafting", cls: "p0",
+        steps: [
+          {
+            title: "Levantamento de Informações Preliminares",
+            desc: "Abertura formal do processo de auditoria com definição de equipe e emissão do memorando.",
+            fullDesc: "A Seção de Auditoria inicia o processo identificando a área auditada e a necessidade de auditoria ordinária, define a equipe responsável, elabora a minuta do Memorando de Abertura e encaminha para análise. A COAUD/COAUG verifica a minuta, podendo aprovar ou devolver com ajustes. Após aprovação da COAUD, a SAU analisa e aprova em caráter definitivo, gerando o Memorando de Abertura oficial que formaliza o início dos trabalhos.",
+            actors: ["Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Memorando de Abertura"]
+          },
+          {
+            title: "Mapeamento do processo",
+            desc: "Coleta de informações, elaboração do Levantamento de Documentos e do Plano de Trabalho.",
+            fullDesc: "A Equipe de Auditoria realiza a coleta de informações sobre o processo auditado, elaborando o Levantamento de Documentos do Processo e o Plano de Trabalho. A Seção de Auditoria analisa os documentos produzidos e, se necessário, devolve para ajustes. Após validação da Seção, a COAUD/COAUG realiza análise, podendo aprovar ou solicitar revisões. Em seguida, a SAU efetua análise final com possíveis devoluções. A Ata de Reunião registra decisões relevantes.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Levantamento de Documentos do Processo", "Plano de Trabalho"]
+          },
+          {
+            title: "Identificação de Objetivos-Chave, Riscos e Controle",
+            desc: "Reunião de abertura com o Auditado, mapeamento do processo e elaboração das matrizes de controle e riscos.",
+            fullDesc: "Realiza-se a Reunião de Abertura com o Auditado para apresentação da equipe e escopo da auditoria ordinária. A Equipe elabora o Mapeamento do Processo com o auxílio do Auditado. Em seguida, elabora a Matriz de Controles, a Matriz de Riscos e a Matriz Testes de Controle. Com base nesses insumos, é desenhado o Programa de Auditoria. Todos os documentos passam por um ciclo de análise pela Seção de Auditoria, pela COAUD e pela SAU, com possibilidade de devoluções e ajustes até a aprovação definitiva que autoriza o início da execução.",
+            actors: ["Auditado", "Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Mapeamento do Processo", "Matriz de Riscos", "Matriz de Controle", "Matriz Testes de Controle", "Programa de Auditoria"]
+          }
+        ]
+      },
+      {
+        name: "Execução", icon: "fa-solid fa-gears", cls: "p1",
+        steps: [
+          {
+            title: "Aplicação de Testes de Auditoria e Achados Preliminares",
+            desc: "Execução dos testes de auditoria e elaboração do Quadro de Achados para encaminhamento ao Auditado.",
+            fullDesc: "Nesta etapa, a Equipe de Auditoria aplica os testes previstos no Programa de Auditoria, gerando o documento de Aplicação de Testes. Com base nos resultados e evidências coletadas, elabora-se o Quadro de Achados, identificando inconformidades, riscos materializados e oportunidades de melhoria. O Quadro de Achados é avaliado sucessivamente pela Seção de Auditoria, COAUD/COAUG e SAU. Somente após a aprovação, o documento é formalmente encaminhado ao Auditado.",
+            actors: ["Equipe de Auditoria", "Auditado", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Aplicação de Testes", "Quadro de Achados"]
+          },
+          {
+            title: "Resposta do Auditado",
+            desc: "O Auditado analisa o Quadro de Achados e elabora suas respostas e justificativas no prazo definido.",
+            fullDesc: "O Auditado recebe formalmente o Quadro de Achados e possui um prazo regulamentar para apresentar suas respostas. Para cada achado identificado, o gestor da área deve elaborar uma manifestação clara, apresentando justificativas documentadas ou propondo medidas saneadoras imediatas. As respostas retornam à Equipe de Auditoria para continuidade do processo.",
+            actors: ["Auditado"],
+            artifacts: ["Resposta ao Quadro de Achados"]
+          }
+        ]
+      },
+      {
+        name: "Comunicação", icon: "fa-solid fa-file-contract", cls: "p2",
+        steps: [
+          {
+            title: "Relatório de Auditoria",
+            desc: "Consolidação dos achados, respostas e elaboração do Relatório Final e Sumário Executivo.",
+            fullDesc: "A Equipe de Auditoria avalia criticamente as respostas enviadas pelo Auditado. Com base nessa análise final, elabora o Relatório de Auditoria e o Sumário Executivo. Apenas após a aprovação da Alta Administração, o Relatório e o Sumário são publicados e formalmente enviados ao Auditado.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
+            artifacts: ["Relatório de Auditoria", "Sumário Executivo"]
+          },
+          {
+            title: "Plano de Ação",
+            desc: "O Auditado recebe o Relatório, verifica a necessidade de Plano de Ação e pactua as correções com a Equipe.",
+            fullDesc: "De posse do Relatório Final e Sumário Executivo, o Auditado verifica as recomendações expedidas. Caso a unidade não possua um plano corretivo em andamento, deve elaborar um Plano de Ação detalhando medidas, responsáveis, prazos de implementação e indicadores de sucesso. A Equipe de Auditoria valida o Plano para garantir que as ações propostas são suficientes para mitigar os riscos e sanar os achados apontados no relatório.",
+            actors: ["Auditado", "Equipe de Auditoria"],
+            artifacts: ["Plano de Ação"]
+          }
+        ]
+      }
+    ]
+  },
+  
+  continua: {
+    title: "Auditoria Contínua",
+    phases: [
+      {
+        name: "Planejamento", icon: "fa-solid fa-compass-drafting", cls: "p0",
+        steps: [
+          {
+            title: "Abertura Formal",
+            desc: "A Seção de Auditoria define a equipe e elabora a minuta que comunica oficialmente o início dos trabalhos.",
+            fullDesc: "A Seção de Auditoria define a equipe e elabora a minuta que comunica oficialmente o início dos trabalhos. O documento segue para aprovação nas instâncias superiores (COAUD/COAUG e SAU).",
+            actors: ["Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Memorando de Abertura"]
+          },
+          {
+            title: "Levantamento e Estruturação do Trabalho",
+            desc: "Coleta aprofundada de normativos e evidências, definindo o escopo, cronograma, recursos e responsabilidades.",
+            fullDesc: "A Equipe de Auditoria faz uma coleta aprofundada de normativos e evidências, definindo o escopo, cronograma, recursos e responsabilidades do trabalho. O plano formulado é submetido a uma cadeia de aprovações (Seção de Auditoria > COAUD/COAUG > SAU) e ajustado caso reprovado em alguma instância. Reuniões podem ser formalizadas neste momento para acordos entre as partes.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Levantamento e Documentos do Processo", "Plano de Trabalho", "Ata de Reunião"]
+          },
+          {
+            title: "Mapeamento, Avaliação de Riscos e Programa",
+            desc: "Reunião de abertura, mapeamento de atividades e controles, e desenvolvimento do passo a passo técnico.",
+            fullDesc: "A equipe realiza uma reunião de abertura com o auditado e inicia o desenho da sequência de atividades do processo para identificar os participantes, atribuições, lacunas e riscos. Com o auxílio do gestor auditado, avalia-se a probabilidade e o impacto de eventos adversos, mapeando as travas existentes (controles) e definindo a metodologia de como testar a eficácia desses controles. Por fim, desenvolve-se um passo a passo técnico detalhando os procedimentos exatos da auditoria, que deve ser aprovado por todas as instâncias superiores.",
+            actors: ["Auditado", "Equipe de Auditoria", "Seção de Auditoria", "COAUD", "SAU"],
+            artifacts: ["Mapeamento do Processo", "Matriz de Riscos", "Matriz de Controle", "Matriz Testes de Controle", "Programa de Auditoria"]
+          }
+        ]
+      },
+      {
+        name: "Execução", icon: "fa-solid fa-gears", cls: "p1",
+        steps: [
+          {
+            title: "Aplicação de Testes e Levantamento de Achados",
+            desc: "Execução dos testes e elaboração de planilha consolidando a situação encontrada versus norma.",
+            fullDesc: "A Equipe de Auditoria executa os testes gerando papéis de trabalho técnico e, a partir das evidências, elabora uma planilha consolidando a situação encontrada (condição) em contraste com o que diz a norma (critério). O resultado é avaliado pela Seção de Auditoria, COAUD/COAUG e SAU; se aprovado, é enviado ao Auditado.",
+            actors: ["Equipe de Auditoria", "Auditado", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Aplicação de Testes", "Quadro de Achados"]
+          },
+          {
+            title: "Defesa do Gestor Auditado",
+            desc: "O Auditado apresenta suas defesas, concordâncias ou justificativas no prazo definido.",
+            fullDesc: "Após receber as situações documentadas pela auditoria, o Auditado tem um prazo definido para apresentar suas defesas, concordâncias ou justificativas.",
+            actors: ["Auditado"],
+            artifacts: ["Resposta ao Quadro de Achados"]
+          }
+        ]
+      },
+      {
+        name: "Comunicação", icon: "fa-solid fa-file-contract", cls: "p2",
+        steps: [
+          {
+            title: "Relatoria e Resumo para a Alta Administração",
+            desc: "Redação de documento narrando a auditoria e de sumário focado na alta administração.",
+            fullDesc: "A Equipe de Auditoria recebe e analisa as respostas do auditado. A partir disso, redige-se um documento extenso narrando toda a auditoria e as conclusões, e outro documento conciso focado na alta administração contendo os principais pontos de melhoria e recomendações. Esses documentos sobem para aprovação nas instâncias de Seção, COAUD/COAUG, SAU e Diretoria Geral (DG), que os encaminha ao Auditado após aprovados.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
+            artifacts: ["Relatório de Auditoria", "Sumário Executivo"]
+          },
+          {
+            title: "Tratamento de Recomendações (Plano de Ação)",
+            desc: "O Auditado define tarefas, prazos e responsáveis para solucionar os achados encontrados.",
+            fullDesc: "Ao receber os relatórios finais, o Auditado verifica a necessidade de formular um acordo de melhoria para solucionar os achados encontrados. Ele define as tarefas, prazos e donos para cada problema, documento que é submetido ao 'OK' da Equipe de Auditoria para ser implementado.",
+            actors: ["Auditado", "Equipe de Auditoria"],
+            artifacts: ["Plano de Ação"]
+          }
+        ]
+      }
+    ]
+  },
+
+  pre_encerramento: {
+    title: "Auditoria de Contas Pré-Encerramento",
+    phases: [
+      {
+        name: "Planejamento", icon: "fa-solid fa-compass-drafting", cls: "p0",
+        steps: [
+          {
+            title: "Início e Abertura Formal",
+            desc: "Abertura formal da auditoria contábil por meio de um memorando comunicando o início oficial dos trabalhos.",
+            fullDesc: "O processo é iniciado pela Seção de Auditoria, que define a Equipe de Auditoria e elabora a minuta do memorando. Em seguida, o documento segue sequencialmente para análise e aprovação da COAUD/COAUG e da SAU (Secretaria de Auditoria), o que consolida a abertura formal na entidade a ser auditada.",
+            actors: ["Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Memorando de Abertura"]
+          },
+          {
+            title: "Entendimento, Estratégia e Materialidade",
+            desc: "A equipe analisa a unidade e seu ambiente financeiro, formula a estratégia, o plano de trabalho e define a materialidade.",
+            fullDesc: "A Equipe de Auditoria levanta informações produzindo o entendimento do ambiente e das contas específicas, bem como a estratégia geral da auditoria e a materialidade. Todo esse conjunto sustenta a elaboração do documento 'Plano de Trabalho', que será analisado pela Seção de Auditoria, COAUD/COAUG e SAU. Caso seja reprovado por alguma dessas instâncias, retorna para ajustes da equipe até ser aprovado integralmente.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Plano de Trabalho", "Definição de Materialidade", "Estratégia Geral de Auditoria", "Entendimento da Entidade/Ambiente", "Entendimento Específicos das Contas"]
+          },
+          {
+            title: "Controles Internos e Programa de Auditoria",
+            desc: "A equipe avalia os controles internos da unidade e redige um roteiro técnico com procedimentos para a execução.",
+            fullDesc: "A Equipe de Auditoria avalia o controle interno contábil da unidade e elabora o 'Programa de Auditoria', estabelecendo o passo a passo dos exames. Este material é submetido à revisão da Seção de Auditoria e, posteriormente, da COAUD/COAUG e SAU, sendo devolvido para correções até a aprovação final pela SAU.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+            artifacts: ["Avaliação do Controle Interno", "Programa de Auditoria"]
+          }
+        ]
+      },
+      {
+        name: "Execução", icon: "fa-solid fa-gears", cls: "p1",
+        steps: [
+          {
+            title: "Execução Técnica e Comunicação de Distorções",
+            desc: "Realização dos exames e documentação imediata de distorções materiais apontadas na contabilidade.",
+            fullDesc: "A Equipe de Auditoria aplica os testes gerando os papéis de trabalho correspondentes e utiliza requisições formais para obter documentos complementares ou justificativas. Ao consolidar as falhas, a equipe redige o relatório apontando os erros materiais na contabilidade, que é sucessivamente revisado pela Seção de Auditoria, COAUD/COAUG e SAU. Estando aprovado, é formalmente remetido ao Auditado para regularização antes do fechamento.",
+            actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "Auditado"],
+            artifacts: ["Aplicação de Testes", "Requisições", "Relatório de Comunicação de Distorções Relevantes"]
+          },
+          {
+            title: "Defesa e Manifestação do Gestor",
+            desc: "Apresentação das explicações e medidas de correção contábil imediata pelo gestor auditado.",
+            fullDesc: "O gestor auditado, após receber o aviso de distorções contábeis e no prazo estipulado, formula e encaminha o documento contendo a sua defesa oficial e as justificativas aplicáveis aos apontamentos realizados pelos auditores. Importante: Nesta modalidade não existe fase autônoma de Comunicação (Relatório Final); todo o processo de regularização se encerra nesta etapa de execução contábil.",
+            actors: ["Auditado"],
+            artifacts: ["Resposta ao Quadro de Achados"]
+          }
+        ]
+      }
+    ]
+  },
+
+  pos_encerramento: { title: "Auditoria de Contas Pós-Encerramento", phases: null },
+  consultoria: { title: "Consultoria", phases: null },
+  monitoramento_1: { title: "Monitoramento 1º Ciclo", phases: null },
+  monitoramento_2: { title: "Monitoramento 2º Ciclo", phases: null }
+};
+
+// ESTADO GLOBAL
+let currentProcessKey = 'ordinaria';
+let currentPhaseIndex = 0;
 let dark = false;
 
-// RENDERIZADOR
-function render() {
-  const phase = PHASES[currentPhase];
+
+// --- LÓGICA DE INTERFACE --- //
+
+// Função para trocar o tipo de auditoria principal (Menu do Topo)
+function setAuditProcess(processKey) {
+  currentProcessKey = processKey;
+  currentPhaseIndex = 0; // Reseta para a primeira fase do novo processo
+
+  // Atualizar visual das abas do topo
+  const tabs = document.getElementById('audit-tabs-container').children;
+  for (let tab of tabs) {
+    tab.classList.remove('active');
+    if (tab.getAttribute('onclick').includes(processKey)) {
+      tab.classList.add('active');
+    }
+  }
+
+  renderSidebar();
+  renderMainArea();
+}
+
+// Renderiza a barra lateral dependendo do processo selecionado
+function renderSidebar() {
+  const processData = AUDIT_TYPES[currentProcessKey];
+  const container = document.getElementById('sidebar-phases-container');
+  const label = document.getElementById('sidebar-process-label');
+  
+  label.textContent = processData.title;
+
+  if (!processData.phases) {
+    container.innerHTML = ''; // Se não há dados, não renderiza abas laterais
+    return;
+  }
+
+  container.innerHTML = processData.phases.map((phase, idx) => `
+    <button class="phase-btn ${idx === currentPhaseIndex ? 'active' : ''}" data-phase="${idx}" onclick="setPhase(${idx})" aria-label="Fase ${phase.name}">
+      <span class="phase-dot" style="background-color: var(--phase${idx+1})"></span>
+      <span>${phase.name}</span>
+      <span class="phase-steps-count">${phase.steps.length} etapas</span>
+    </button>
+  `).join('');
+}
+
+// Função para trocar a fase dentro de um processo (Sidebar)
+function setPhase(idx) {
+  currentPhaseIndex = idx;
+  const buttons = document.querySelectorAll('.phase-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  document.querySelector(`.phase-btn[data-phase="${idx}"]`).classList.add('active');
+  renderMainArea();
+}
+
+// Renderiza o conteúdo central (Fluxos)
+function renderMainArea() {
+  const processData = AUDIT_TYPES[currentProcessKey];
+  const mainArea = document.getElementById('main-area');
+
+  // Estado Vazio (Para fluxos não mapeados ainda)
+  if (!processData.phases) {
+    mainArea.innerHTML = `
+      <div class="empty-state anim">
+        <i class="fa-solid fa-person-digging"></i>
+        <h2>Fluxo em mapeamento</h2>
+        <p>Os processos detalhados para <strong>${processData.title}</strong> serão inseridos em breve.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const phase = processData.phases[currentPhaseIndex];
   const allActors = [...new Set(phase.steps.flatMap(s => s.actors))];
   const allArtifacts = phase.steps.flatMap((s, si) =>
     s.artifacts.map(a => ({ name: a, step: si + 1 }))
   );
 
-  document.getElementById('main-area').innerHTML = `
+  mainArea.innerHTML = `
     <div class="phase-header anim">
       <div class="phase-title">
         <div class="phase-icon ${phase.cls}"><i class="${phase.icon}"></i></div>
@@ -746,17 +989,10 @@ function render() {
   `;
 }
 
-// TROCA DE FASE
-function setPhase(idx) {
-  currentPhase = idx;
-  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.phase-btn[data-phase="${idx}"]`).classList.add('active');
-  render();
-}
+// --- MODAIS E TOOLTIPS --- //
 
-// MODAL
 function openStepModal(si) {
-  const phase = PHASES[currentPhase];
+  const phase = AUDIT_TYPES[currentProcessKey].phases[currentPhaseIndex];
   const step = phase.steps[si];
 
   document.getElementById('modal-title-text').textContent = step.title;
@@ -793,12 +1029,11 @@ function closeModalDirect() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
-// TOOLTIP
 let tooltipTimer;
 function showTooltip(e, name, click = false) {
   clearTimeout(tooltipTimer);
   const tt = document.getElementById('tooltip');
-  const desc = ARTIFACT_DESC[name] || "Documento pertinente a esta etapa do fluxo de auditoria.";
+  const desc = ARTIFACT_DESC[name] || "Documento pertinente a esta etapa do fluxo.";
   document.getElementById('tooltip-title').textContent = name;
   document.getElementById('tooltip-body').textContent = desc;
   const rect = e.currentTarget.getBoundingClientRect();
@@ -821,11 +1056,15 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.artifact-card')) hideTooltip();
 });
 
-// EXPORT
+// --- UTILITÁRIOS --- //
+
 function exportPhase() {
-  const phase = PHASES[currentPhase];
+  const process = AUDIT_TYPES[currentProcessKey];
+  if(!process.phases) return;
+  const phase = process.phases[currentPhaseIndex];
+  
   const summary = {
-    Apresentacao: "Processo de Auditoria Ordinária - TSE",
+    Apresentacao: `Processo de ${process.title} - TSE`,
     Fase: phase.name,
     Etapas: phase.steps.map((s, si) => ({
       Numero: si + 1,
@@ -838,11 +1077,10 @@ function exportPhase() {
   };
   const el = document.createElement('a');
   el.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(summary, null, 2));
-  el.download = `Estrutura_Auditoria_Ordinaria_${phase.name.toLowerCase()}.json`;
+  el.download = `Estrutura_${currentProcessKey}_${phase.name.toLowerCase()}.json`;
   el.click();
 }
 
-// TEMA
 function toggleTheme() {
   dark = !dark;
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
@@ -851,7 +1089,8 @@ function toggleTheme() {
 }
 
 // INICIALIZAÇÃO
-render();
+setAuditProcess('ordinaria');
+
 </script>
 </body>
 </html>

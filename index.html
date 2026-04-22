@@ -609,16 +609,20 @@ const ACTOR_META = {
   "Equipe de Auditoria": { icon: "fa-solid fa-users", role: "Servidores responsáveis pela execução" },
   "Seção de Auditoria": { icon: "fa-solid fa-sitemap", role: "Supervisão técnica inicial" },
   "COAUD/COAUG": { icon: "fa-solid fa-user-tie", role: "Coordenação de Auditoria e Controle" },
-  "COAUD": { icon: "fa-solid fa-user-tie", role: "Coordenação de Auditoria" },
   "SAU": { icon: "fa-solid fa-landmark", role: "Secretaria de Auditoria" },
   "DG": { icon: "fa-solid fa-star", role: "Diretoria-Geral (Alta Administração)" }
 };
 
 const ARTIFACT_DESC = {
   "Memorando de Abertura": "Documento formal que comunica o início oficial dos trabalhos de auditoria.",
-  "Levantamento de Documentos": "Compilação de regulamentos, manuais e histórico necessários para conhecer a área.",
-  "Levantamento e Documentos do Processo": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
-  "Levantamento de Documentos do Processo": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
+  "Entendimento Preliminar do Objeto": "Coleta aprofundada de normativos e evidências específicas do processo em foco.",
+  "Primeira Aplicação de Testes": "",
+  "Primeiro Relatório de Auditoria":"",
+  "Segunda Aplicação de Testes":"",
+  "Segundo Relatório de Auditoria":"",
+  "Terceira Aplicação de Testes":"",
+  "Terceiro Relatório de Auditoria":"",
+  "Relatório Executivo": "",
   "Plano de Trabalho": "Guia que define o escopo, cronograma, recursos e responsabilidades da auditoria.",
   "Ata de Reunião": "Registro formal que documenta o que foi discutido e acordado entre as partes.",
   "Mapeamento do Processo": "Representação visual ou descritiva do fluxo de trabalho da unidade auditada.",
@@ -669,7 +673,7 @@ const AUDIT_TYPES = {
             desc: "Coleta de informações, elaboração do Levantamento de Documentos e do Plano de Trabalho.",
             fullDesc: "A Equipe de Auditoria realiza a coleta de informações sobre o processo auditado, elaborando o Levantamento de Documentos do Processo e o Plano de Trabalho. A Seção de Auditoria analisa os documentos produzidos e, se necessário, devolve para ajustes. Após validação da Seção, a COAUD/COAUG realiza análise, podendo aprovar ou solicitar revisões. Em seguida, a SAU efetua análise final com possíveis devoluções. A Ata de Reunião registra decisões relevantes.",
             actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-            artifacts: ["Levantamento de Documentos do Processo", "Plano de Trabalho"]
+            artifacts: ["Entendimento Preliminar do Objeto", "Plano de Trabalho"]
           },
           {
             title: "Identificação de Objetivos-Chave, Riscos e Controle",
@@ -739,15 +743,8 @@ const AUDIT_TYPES = {
             desc: "Coleta aprofundada de normativos e evidências, definindo o escopo, cronograma, recursos e responsabilidades.",
             fullDesc: "A Equipe de Auditoria faz uma coleta aprofundada de normativos e evidências, definindo o escopo, cronograma, recursos e responsabilidades do trabalho. O plano formulado é submetido a uma cadeia de aprovações (Seção de Auditoria > COAUD/COAUG > SAU) e ajustado caso reprovado em alguma instância. Reuniões podem ser formalizadas neste momento para acordos entre as partes.",
             actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-            artifacts: ["Levantamento e Documentos do Processo", "Plano de Trabalho", "Ata de Reunião"]
+            artifacts: ["Entendimento Preliminar do Objeto", "Plano de Trabalho",]
           },
-          {
-            title: "Mapeamento, Avaliação de Riscos e Programa",
-            desc: "Reunião de abertura, mapeamento de atividades e controles, e desenvolvimento do passo a passo técnico.",
-            fullDesc: "A equipe realiza uma reunião de abertura com o auditado e inicia o desenho da sequência de atividades do processo para identificar os participantes, atribuições, lacunas e riscos. Com o auxílio do gestor auditado, avalia-se a probabilidade e o impacto de eventos adversos, mapeando as travas existentes (controles) e definindo a metodologia de como testar a eficácia desses controles. Por fim, desenvolve-se um passo a passo técnico detalhando os procedimentos exatos da auditoria, que deve ser aprovado por todas as instâncias superiores.",
-            actors: ["Auditado", "Equipe de Auditoria", "Seção de Auditoria", "COAUD", "SAU"],
-            artifacts: ["Mapeamento do Processo", "Matriz de Riscos", "Matriz de Controle", "Matriz Testes de Controle", "Programa de Auditoria"]
-          }
         ]
       },
       {
@@ -758,14 +755,14 @@ const AUDIT_TYPES = {
             desc: "Execução dos testes e elaboração de planilha consolidando a situação encontrada versus norma.",
             fullDesc: "A Equipe de Auditoria executa os testes gerando papéis de trabalho técnico e, a partir das evidências, elabora uma planilha consolidando a situação encontrada (condição) em contraste com o que diz a norma (critério). O resultado é avaliado pela Seção de Auditoria, COAUD/COAUG e SAU; se aprovado, é enviado ao Auditado.",
             actors: ["Equipe de Auditoria", "Auditado", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
-            artifacts: ["Aplicação de Testes", "Quadro de Achados"]
+            artifacts: ["Primeira Aplicação de Testes", "Primeiro Relatório de Auditoria"]
           },
           {
             title: "Manifestação do Gestor Auditado",
             desc: "O Auditado manifesta sua opinião e pode apresentar concordâncias ou justificativas no prazo definido.",
             fullDesc: "Após receber o Quadro de Achados, o Auditado tem um prazo definido para elaborar um documento formal de manifestação, onde ele pode apresentar suas justificativas técnicas, esclarecimentos de dúvidas, fornecer informações adicionais ou registrar concordância em relação às situações apontadas pela auditoria",
-            actors: ["Auditado"],
-            artifacts: ["Resposta ao Quadro de Achados"]
+            actors: ["Equipe de Auditoria", "Auditado"],
+            artifacts: ["Segunda Aplicação de Testes", "Segundo Relatório de Auditoria", "Terceira Aplicação de Testes"]
           }
         ]
       },
@@ -777,14 +774,7 @@ const AUDIT_TYPES = {
             desc: "Redação de documento narrando a auditoria e de sumário focado na alta administração.",
             fullDesc: "A Equipe de Auditoria recebe e analisa as respostas do auditado. A partir disso, redige-se um documento extenso narrando toda a auditoria e as conclusões, e outro documento conciso focado na alta administração contendo os principais pontos de melhoria e recomendações. Esses documentos sobem para aprovação nas instâncias de Seção, COAUD/COAUG, SAU e Diretoria Geral (DG), que os encaminha ao Auditado após aprovados.",
             actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
-            artifacts: ["Relatório de Auditoria", "Sumário Executivo"]
-          },
-          {
-            title: "Tratamento de Recomendações (Plano de Ação)",
-            desc: "O Auditado define tarefas, prazos e responsáveis para solucionar os achados encontrados.",
-            fullDesc: "Ao receber os relatórios finais, o Auditado verifica a necessidade de formular um acordo de melhoria para solucionar os achados encontrados. Ele define as tarefas, prazos e donos para cada problema, documento que é submetido ao 'OK' da Equipe de Auditoria para ser implementado.",
-            actors: ["Auditado", "Equipe de Auditoria"],
-            artifacts: ["Plano de Ação"]
+            artifacts: ["Terceiro Relatório de Auditoria", "Relatório Executivo"]
           }
         ]
       }
@@ -828,14 +818,7 @@ const AUDIT_TYPES = {
             desc: "Realização dos exames e documentação imediata de distorções materiais apontadas na contabilidade.",
             fullDesc: "A Equipe de Auditoria aplica os testes gerando os papéis de trabalho correspondentes e utiliza requisições formais para obter documentos complementares ou justificativas. Ao consolidar as falhas, a equipe redige o relatório apontando os erros materiais na contabilidade, que é sucessivamente revisado pela Seção de Auditoria, COAUD/COAUG e SAU. Estando aprovado, é formalmente remetido ao Auditado para regularização antes do fechamento.",
             actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "Auditado"],
-            artifacts: ["Aplicação de Testes", "Requisições", "Relatório de Comunicação de Distorções Relevantes"]
-          },
-          {
-            title: "Manifestação e Esclarecimentos do Gestor",
-            desc: "Apresentação das explicações e medidas de correção contábil imediata pelo gestor auditado.",
-            fullDesc: "O Auditado, ao receber os apontamentos descritos no Relatório de Distorções, prepara e envia um documento com os seus esclarecimentos, evidências adicionais, justificativas ou, se for o caso, a concordância com os ajustes propostos.",
-            actors: ["Auditado"],
-            artifacts: ["Resposta ao Quadro de Achados"]
+            artifacts: ["Aplicação de Testes", "Requisições","Entrevistas", "Relatório de Comunicação de Distorções Relevantes"]
           }
         ]
       }
@@ -848,14 +831,6 @@ const AUDIT_TYPES = {
         {
             name: "Planejamento", icon: "fa-solid fa-compass-drafting", cls: "p0",
             steps: [
-                {
-                    title: "Abertura Formal",
-                    desc: "Documenta o início oficial dos exames do período pós-encerramento",
-                    fullDesc: "A Seção elabora a minuta, que segue o fluxo de aprovação das instâncias de coordenação e secretaria (COAUD/COAUG e SAU) para chancelar a atuação da equipe no encerramento das contas.",
-                    actors: ["Secretaria de Auditoria", "COAUD/COAUG", "SAU"],
-                    artifacts: ["Memorando de Abertura"]
-
-                },
                 {
                     title: "Entendimento, Materialidade e Revisão da Estratégia",
                     desc: "A equipe realiza o entendimento específico das contas já fechadas e define ou atualiza os níveis de materialidade",

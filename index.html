@@ -632,15 +632,21 @@ const ARTIFACT_DESC = {
   "Relatório de Auditoria": "Documento extenso e detalhado que narra toda a auditoria, achados e conclusões.",
   "Sumário Executivo": "Documento destinado à alta administração com os principais pontos de melhoria e recomendações.",
   "Plano de Ação": "Acordo de melhoria com tarefas, prazos e donos definidos para resolver os achados.",
-  
-  // Novos artefatos (Auditoria de Contas Pré-Encerramento)
   "Definição de Materialidade": "Documento que define o volume financeiro aceitável ou crítico que norteará os exames contábeis.",
   "Estratégia Geral de Auditoria": "Plano que estabelece a abordagem global, a época e a extensão da auditoria.",
   "Entendimento da Entidade/Ambiente": "Registro da análise profunda da unidade auditada e seu contexto financeiro.",
   "Entendimento Específicos das Contas": "Análise detalhada do ambiente financeiro e das contas específicas que serão examinadas.",
   "Avaliação do Controle Interno": "Documento que avalia o funcionamento e a segurança dos controles internos contábeis da unidade.",
   "Requisições": "Solicitações formais da equipe para obter documentos complementares ou justificativas do gestor.",
-  "Relatório de Comunicação de Distorções Relevantes": "Relatório imediato que aponta os erros materiais e falhas de saldos na contabilidade à gestão."
+  "Relatório de Comunicação de Distorções Relevantes": "Relatório imediato que aponta os erros materiais e falhas de saldos na contabilidade à gestão.",
+  "Revisão da Estratégia Geral de Auditoria": " Documento que serve para que a equipe de auditoria ajuste o foco e as diretrizes gerais do seu trabalho ao examinar as contas que já foram oficialmente fechadas",
+  "Entendimento Específico das Contas": "Utilizado para documentar a análise e a compreensão aprofundada da equipe de auditoria sobre o ambiente contábil-financeiro e as contas específicas da unidade que será auditada",
+  "Distorções de Saldos Iniciais": "Documentar a análise da equipe de auditoria sobre eventuais erros ou irregularidades financeiras trazidas de exercícios anteriores.",
+  "Entrevistas": "Registra e documenta a técnica de investigação realizada por meio de perguntas e respostas aplicadas aos gestores ou profissionais que conhecem bem o órgão e as atividades sob exame",
+  "Representação Formal": "Documenta e oficializa denúncias nos casos em que a equipe de auditoria identifica irregularidades graves, ilegalidades notórias ou indícios de dano ao erário nas contas examinadas.",
+  "Certificado de Auditoria": "Emite uma opinião formal e conclusiva com vistas a certificar a regularidade/irregularidade das contas da gestão.",
+  "Relatório Longo": "Consolida e Narra de forma extensa e detalhada todo o trabalho de avaliação executado pela equipe de auditoria sobre as demonstrações contábeis e financeiras do exercício já fechado.",
+  "Envio do Relatório Longo e Certificado via Conecta TCU": "Formaliza a remessa oficial dos resultados finais da auditoria ao órgão de controle externo"
 };
 
 // Armazenamento de todos os fluxos de processos
@@ -755,9 +761,9 @@ const AUDIT_TYPES = {
             artifacts: ["Aplicação de Testes", "Quadro de Achados"]
           },
           {
-            title: "Defesa do Gestor Auditado",
-            desc: "O Auditado apresenta suas defesas, concordâncias ou justificativas no prazo definido.",
-            fullDesc: "Após receber as situações documentadas pela auditoria, o Auditado tem um prazo definido para apresentar suas defesas, concordâncias ou justificativas.",
+            title: "Manifestação do Gestor Auditado",
+            desc: "O Auditado manifesta sua opinião e pode apresentar concordâncias ou justificativas no prazo definido.",
+            fullDesc: "Após receber o Quadro de Achados, o Auditado tem um prazo definido para elaborar um documento formal de manifestação, onde ele pode apresentar suas justificativas técnicas, esclarecimentos de dúvidas, fornecer informações adicionais ou registrar concordância em relação às situações apontadas pela auditoria",
             actors: ["Auditado"],
             artifacts: ["Resposta ao Quadro de Achados"]
           }
@@ -825,9 +831,9 @@ const AUDIT_TYPES = {
             artifacts: ["Aplicação de Testes", "Requisições", "Relatório de Comunicação de Distorções Relevantes"]
           },
           {
-            title: "Defesa e Manifestação do Gestor",
+            title: "Manifestação e Esclarecimentos do Gestor",
             desc: "Apresentação das explicações e medidas de correção contábil imediata pelo gestor auditado.",
-            fullDesc: "O gestor auditado, após receber o aviso de distorções contábeis e no prazo estipulado, formula e encaminha o documento contendo a sua defesa oficial e as justificativas aplicáveis aos apontamentos realizados pelos auditores. Importante: Nesta modalidade não existe fase autônoma de Comunicação (Relatório Final); todo o processo de regularização se encerra nesta etapa de execução contábil.",
+            fullDesc: "O Auditado, ao receber os apontamentos descritos no Relatório de Distorções, prepara e envia um documento com os seus esclarecimentos, evidências adicionais, justificativas ou, se for o caso, a concordância com os ajustes propostos.",
             actors: ["Auditado"],
             artifacts: ["Resposta ao Quadro de Achados"]
           }
@@ -836,7 +842,78 @@ const AUDIT_TYPES = {
     ]
   },
 
-  pos_encerramento: { title: "Auditoria de Contas Pós-Encerramento", phases: null },
+  pos_encerramento: { 
+    title: "Auditoria de Contas Pós-Encerramento", 
+    phases: [
+        {
+            name: "Planejamento", icon: "fa-solid fa-compass-drafting", cls: "p0",
+            steps: [
+                {
+                    title: "Abertura Formal",
+                    desc: "Documenta o início oficial dos exames do período pós-encerramento",
+                    fullDesc: "A Seção elabora a minuta, que segue o fluxo de aprovação das instâncias de coordenação e secretaria (COAUD/COAUG e SAU) para chancelar a atuação da equipe no encerramento das contas.",
+                    actors: ["Secretaria de Auditoria", "COAUD/COAUG", "SAU"],
+                    artifacts: ["Memorando de Abertura"]
+
+                },
+                {
+                    title: "Entendimento, Materialidade e Revisão da Estratégia",
+                    desc: "A equipe realiza o entendimento específico das contas já fechadas e define ou atualiza os níveis de materialidade",
+                    fullDesc: "A equipe elabora o guia do trabalho e os documentos técnicos de materialidade e estratégia, sendo o Plano de Trabalho submetido à cascata de revisão e aprovação até a SAU.",
+                    actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+                    artifacts: ["Plano de Trabalho", "Definição de Materialidade", "Revisão da Estratégia Geral de Auditoria", "Entendimento Específico das Contas"]
+
+                },
+                {
+                    title: "Mapeamento de Riscos, Controles e Programa de Auditoria",
+                    desc: "A equipe estrutura formalmente os riscos e os controles internos, gerando matrizes próprias.",
+                    fullDesc: "A equipe avalia os controles e estrutura as matrizes e o Programa de Auditoria, que será aprovado pelas esferas superiores",
+                    actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+                    artifacts: ["Matriz de Riscos", "Matriz de Controle", "Avaliação do Controle Interno", "Programa de Auditoria"]
+
+                }
+            ]
+        },
+        {
+            name: "Execução", icon: "fa-solid fa-gears", cls: "p1",
+            steps: [
+                {
+                    title: "Coleta de Dados e Aplicação de Testes",
+                    desc: " A equipe avalia eventuais erros que vêm de saldos anteriores, aplica testes nas transações e contas atuais, e utiliza técnicas complementares para recolher evidências",
+                    fullDesc: "A equipe operacionaliza os procedimentos definidos no planejamento, reunindo documentação, gerando registros de testes, fazendo requisições de documentos ao gestor e elaborando entrevistas (evidências testemunhais)",
+                    actors: ["Equipe de Auditoria", "Auditado"],
+                    artifacts: ["Distorções de Saldos Iniciais", "Aplicação de Testes", "Requisições", "Entrevistas"]
+                },
+                {
+                    title: "Documentação de Irregularidades e Representação",
+                    desc: "Caso ocorram falhas materiais nos saldos que não foram tratadas ou irregularidades graves, elas são apontadas em relatórios de comunicação. Em casos extremos de ilegalidades severas, há a exigência de representação",
+                    fullDesc: "A equipe consolida as constatações mais relevantes em comunicados à gestão e, se for o caso, cria documentações de denúncias ou representações formais a instâncias superiores, passando pela aprovação da chefia",
+                    actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU"],
+                    artifacts: ["Relatório de Comunicação de Distorções Relevantes", "Representação Formal"]
+                }
+            ]
+        },
+        {
+            name: "Relatório", icon: "fa-solid fa-file-contract", cls: "p2",
+            steps: [
+                {
+                    title: "Relatoria Final e Certificação",
+                    desc: "A equipe técnica emite sua opinião conclusiva a respeito da fidedignidade e conformidade das demonstrações contábeis auditadas. Elabora-se um relatório robusto e um atestado atestando (certificando) a regularidade ou não regularidade das contas",
+                    fullDesc: "A Equipe de Auditoria compila todos os exames em um documento extenso narrando o trabalho como um todo e emite formalmente um parecer de atesto sobre a regularidade das contas governamentais. As instâncias de revisão (Seção, COAUD/COAUG, SAU e DG) examinam a qualidade, aderência legal e as opiniões firmadas nos artefatos.",
+                    actors: ["Equipe de Auditoria", "Seção de Auditoria", "COAUD/COAUG", "SAU", "DG"],
+                    artifacts: ["Certificado de Auditoria", "Relatório Longo"]
+                },
+                {
+                    title: "Remessa Externa (Prestação de Contas)",
+                    desc: "Envio oficial do resultado da auditoria e da comprovação das contas para a esfera competente do controle externo (Tribunal de Contas da União)",
+                    fullDesc: "Uma vez aprovados o Relatório Longo e o Certificado devidamente aprovados por todas as esferas cabíveis da organização, o conjunto é tramitado eletronicamente ao TCU, concluindo assim o processo da auditoria sobre as contas já encerradas.",
+                    actors: ["SAU", "DG"],
+                    artifacts: ["Envio do Relatório Longo e Certificado via Conecta TCU"]
+                }
+            ]
+        }
+    ]
+},
   consultoria: { title: "Consultoria", phases: null },
   monitoramento_1: { title: "Monitoramento 1º Ciclo", phases: null },
   monitoramento_2: { title: "Monitoramento 2º Ciclo", phases: null }

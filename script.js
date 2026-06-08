@@ -15,7 +15,7 @@ const ARTIFACT_DESC = {
   "Ata de Reunião": "Registro formal que documenta o que foi discutido e acordado entre as partes.",
   "Mapeamento do Processo": "Representação estruturada das atividades, gargalos e interações no fluxo de trabalho auditado.",
   "Matriz de Riscos": "Ferramenta técnica para identificar e avaliar a probabilidade e o impacto de eventos adversos.",
-  "Matriz de Controle": "Mapeamento dos mechanisms existentes para atenuar ou tratar os riscos de controle identificados.",
+  "Matriz de Controle": "Mapeamento dos mecanismos existentes para atenuar ou tratar os riscos de controle identificados.",
   "Matriz Testes de Controle": "Metodologia programada para testar a operacionalidade e eficácia dos controles internos.",
   "Programa de Auditoria": "Passo a passo técnico detalhado listando os procedimentos que a equipe executará em campo.",
   "Aplicação de Testes": "Execução técnica do Programa de Auditoria gerando registros e papéis de trabalho substantivos.",
@@ -727,7 +727,7 @@ const AUDIT_TYPES = {
           {
             title: "Relatório de Monitoramento",
             desc: "Consolidação técnica do percentual de cumprimento.",
-            fullDesc: "Relatório oficial que formaliza o status (cumprida, em cumprimento ou não cumprida) das recomendações emitidas anteriormente.",
+            fullDesc: "Relatório oficial que formaliza o status (cumprida, em cumprimento ou não cumprida) das recomendações emitas anteriormente.",
             prazo: 30, artifact: "Relatório de Monitoramento"
           }
         ]
@@ -780,7 +780,7 @@ const AUDIT_TYPES = {
 /* === [CAPÍTULO] ESTADO GLOBAL DA APLICAÇÃO === */
 
 let currentProcessKey = 'ordinaria';
-let currentPhaseIndex = -1; // -1 indica "Ver todas as fases" por padrão
+let currentPhaseIndex = 0; // Controlado pelo setAuditProcess de forma dinâmica
 let dark = false;
 let prazosChartInstance = null;
 
@@ -801,7 +801,13 @@ function renderPrimarySidebar() {
 /* --- [Seção] Gerenciamento do Processo de Auditoria --- */
 function setAuditProcess(processKey) {
   currentProcessKey = processKey;
-  currentPhaseIndex = -1; // Reseta para exibir "Ver todas as fases" por padrão ao alternar o processo
+  
+  // Se for um monitoramento de ciclo único, força exibição em "Ver todas as fases" (-1)
+  if (processKey === 'monitoramento_1' || processKey === 'monitoramento_2') {
+    currentPhaseIndex = -1;
+  } else {
+    currentPhaseIndex = 0; // Seleciona por padrão a primeira fase de trabalho (Planejamento)
+  }
 
   const tabs = document.querySelectorAll('.audit-tab');
   tabs.forEach(tab => {
@@ -856,7 +862,7 @@ function renderMainAreaContent() {
   const mainArea = document.getElementById('main-area');
   if (!mainArea) return;
 
-  // Resolução segura da fase ativa (null quando currentPhaseIndex for -1)
+  // Resolução segura da fase ativa (null quando no modo "Ver todas as fases" / -1)
   const phase = currentPhaseIndex === -1 ? null : processData.phases[currentPhaseIndex];
 
   let currentSteps = [];
@@ -865,25 +871,26 @@ function renderMainAreaContent() {
   let displayPhaseCls = "";
 
   const totalStepsCount = processData.phases.reduce((acc, p) => acc + p.steps.length, 0);
+  const isMonitoramento = (currentProcessKey === 'monitoramento_1' || currentProcessKey === 'monitoramento_2');
 
   if (currentPhaseIndex === -1) {
-    // Modo "Ver todas as fases": concatena as etapas de todas as subfases
+    // Modo "Ver todas as fases": concatena as etapas de todas as subfases do processo ativo
     currentSteps = processData.phases.flatMap(p => p.steps.map(s => ({ ...s, phaseCls: p.cls })));
     displayPhaseName = "Visão Completa do Processo";
     displayPhaseIcon = "fa-solid fa-circle-nodes";
     displayPhaseCls = "p1";
   } else {
-    // Modo específico de fase ativa
+    // Modo específico de fase selecionada
     currentSteps = phase.steps.map(s => ({ ...s, phaseCls: phase.cls }));
     displayPhaseName = phase.name;
     displayPhaseIcon = phase.icon;
     displayPhaseCls = phase.cls;
   }
 
-  // Calcular o prazo da fase selecionada (Micro)
+  // Calcular o prazo da fase em exibição (Micro)
   const phaseDays = currentSteps.reduce((acc, step) => acc + step.prazo, 0);
 
-  // Calcular o prazo global do processo (Macro)
+  // Calcular o prazo global acumulado de todo o processo (Macro)
   const globalDays = processData.phases.reduce((sumPhase, p) => {
     return sumPhase + p.steps.reduce((sumStep, s) => sumStep + s.prazo, 0);
   }, 0);
@@ -907,20 +914,22 @@ function renderMainAreaContent() {
         <!-- Sidebar Secundária (Fases) -->
         <div class="sidebar-secondary anim">
           <div class="col-header"><i class="fa-solid fa-layer-group"></i> Fases</div>
-          <!-- Botão "Ver todas as fases" -->
-          <button class="phase-btn ${currentPhaseIndex === -1 ? 'active' : ''}" data-phase="-1" onclick="setPhase(-1)" aria-label="Visualizar todas as fases de forma integrada">
-            <i class="fa-solid fa-circle-nodes"></i>
-            <span>Ver todas as fases</span>
-            <span class="phase-steps-count">${totalStepsCount}</span>
-          </button>
-          <!-- Botões das Fases Normais -->
-          ${processData.phases.map((p, idx) => `
+          
+          <!-- Botões das Fases Normais (Omitidos em Monitoramentos por possuírem apenas ciclo unificado) -->
+          ${!isMonitoramento ? processData.phases.map((p, idx) => `
             <button class="phase-btn ${idx === currentPhaseIndex ? 'active' : ''}" data-phase="${idx}" onclick="setPhase(${idx})" aria-label="Fase ${p.name}">
               <span class="phase-dot" style="background-color: var(--phase${idx+1})"></span>
               <span>${p.name}</span>
               <span class="phase-steps-count">${p.steps.length}</span>
             </button>
-          `).join('')}
+          `).join('') : ''}
+          
+          <!-- Botão "Ver todas as fases" (Sempre fixado na última posição) -->
+          <button class="phase-btn ${currentPhaseIndex === -1 ? 'active' : ''}" data-phase="-1" onclick="setPhase(-1)" aria-label="Visualizar todas as fases de forma integrada">
+            <i class="fa-solid fa-circle-nodes"></i>
+            <span>Ver todas as fases</span>
+            <span class="phase-steps-count">${totalStepsCount}</span>
+          </button>
         </div>
 
         <!-- Coluna de Processos (Linha do Tempo) -->
@@ -930,14 +939,25 @@ function renderMainAreaContent() {
             ${currentSteps.map((step, si) => {
               const isFirstStep = (si === 0);
               const isLastStep = (si === currentSteps.length - 1);
+              
+              // Calcular numeração contínua/absoluta das etapas
+              let absoluteNumber = si + 1;
+              if (currentPhaseIndex !== -1) {
+                let previousStepsCount = 0;
+                for (let i = 0; i < currentPhaseIndex; i++) {
+                  previousStepsCount += processData.phases[i].steps.length;
+                }
+                absoluteNumber = previousStepsCount + si + 1;
+              }
+
               return `
                 <div class="step-card anim anim-d${Math.min(si+1,5)}"
                      onclick="openStepModal(${si})"
-                     aria-label="Etapa ${si+1}: ${step.title}"
+                     aria-label="Etapa ${absoluteNumber}: ${step.title}"
                      role="button" tabindex="0"
                      onkeydown="if(event.key==='Enter')openStepModal(${si})">
                   <div class="step-num">
-                    <span class="step-badge ${step.phaseCls}">Etapa ${si+1}</span>
+                    <span class="step-badge ${step.phaseCls}">Etapa ${absoluteNumber}</span>
                     ${isFirstStep ? `<span class="start-badge">Início</span>` : ''}
                     ${isLastStep ? `<span class="conclusion-badge">Conclusão</span>` : ''}
                     <span class="duration-badge"><i class="fa-regular fa-clock"></i> ${step.prazo} ${step.prazo === 1 ? 'dia' : 'dias'}</span>
@@ -956,22 +976,30 @@ function renderMainAreaContent() {
           <div class="col-header"><i class="fa-solid fa-chart-pie"></i> Painel de Prazo</div>
           <div class="chart-card anim anim-d2">
             <div class="chart-card-kpis">
-              <!-- KPI Global (Macro) -->
-              <div class="kpi-block">
-                <span class="chart-label">Prazo Total do Processo</span>
-                <h2 class="chart-total-value">${globalDays} <span class="chart-days-text">${globalDays === 1 ? 'dia' : 'dias'}</span></h2>
-              </div>
-              <!-- KPI de Fase (Micro) se não estiver em "Ver todas as fases" -->
-              ${currentPhaseIndex !== -1 ? `
-                <div class="kpi-block kpi-block--secondary">
-                  <span class="chart-label">Esforço desta Fase (${displayPhaseName})</span>
-                  <h2 class="chart-total-value">${phaseDays} <span class="chart-days-text">${phaseDays === 1 ? 'dia' : 'dias'}</span></h2>
-                </div>
-              ` : `
-                <div class="kpi-block kpi-block--secondary">
-                  <span class="chart-label">Esforço Selecionado (Ciclo Completo)</span>
+              ${isMonitoramento ? `
+                <!-- KPI Único para processos de ciclo unificado de monitoramento -->
+                <div class="kpi-block">
+                  <span class="chart-label">Prazo Total do Monitoramento</span>
                   <h2 class="chart-total-value">${globalDays} <span class="chart-days-text">${globalDays === 1 ? 'dia' : 'dias'}</span></h2>
                 </div>
+              ` : `
+                <!-- KPI Global (Macro) -->
+                <div class="kpi-block">
+                  <span class="chart-label">Prazo Total do Processo</span>
+                  <h2 class="chart-total-value">${globalDays} <span class="chart-days-text">${globalDays === 1 ? 'dia' : 'dias'}</span></h2>
+                </div>
+                <!-- KPI de Fase (Micro) se aplicável -->
+                ${currentPhaseIndex !== -1 ? `
+                  <div class="kpi-block kpi-block--secondary">
+                    <span class="chart-label">Esforço desta Fase (${displayPhaseName})</span>
+                    <h2 class="chart-total-value">${phaseDays} <span class="chart-days-text">${phaseDays === 1 ? 'dia' : 'dias'}</span></h2>
+                  </div>
+                ` : `
+                  <div class="kpi-block kpi-block--secondary">
+                    <span class="chart-label">Esforço Selecionado (Ciclo Completo)</span>
+                    <h2 class="chart-total-value">${globalDays} <span class="chart-days-text">${globalDays === 1 ? 'dia' : 'dias'}</span></h2>
+                  </div>
+                `}
               `}
             </div>
             <div class="chart-body">
@@ -985,7 +1013,17 @@ function renderMainAreaContent() {
   `;
 
   // Processar dados do gráfico horizontal de barras simples
-  const chartLabels = currentSteps.map((s, idx) => `Etapa ${idx + 1}`);
+  const chartLabels = currentSteps.map((s, idx) => {
+    let absoluteNum = idx + 1;
+    if (currentPhaseIndex !== -1) {
+      let prevCount = 0;
+      for (let i = 0; i < currentPhaseIndex; i++) {
+        prevCount += processData.phases[i].steps.length;
+      }
+      absoluteNum = prevCount + idx + 1;
+    }
+    return `Etapa ${absoluteNum}`;
+  });
   const chartData = currentSteps.map(s => s.prazo);
   renderPrazosChart(chartLabels, chartData);
 }
@@ -1053,20 +1091,29 @@ function openStepModal(si) {
   const processData = AUDIT_TYPES[currentProcessKey];
   let currentSteps = [];
   let activePhaseName = "";
+  let absoluteNumber = si + 1;
 
   if (currentPhaseIndex === -1) {
     currentSteps = processData.phases.flatMap(p => p.steps.map(s => ({ ...s, phaseName: p.name })));
     activePhaseName = currentSteps[si].phaseName;
+    absoluteNumber = si + 1;
   } else {
     const phase = processData.phases[currentPhaseIndex];
     currentSteps = phase.steps;
     activePhaseName = phase.name;
+    
+    // Calcular numeração absoluta para manter coerência com o cartão clicado
+    let previousStepsCount = 0;
+    for (let i = 0; i < currentPhaseIndex; i++) {
+      previousStepsCount += processData.phases[i].steps.length;
+    }
+    absoluteNumber = previousStepsCount + si + 1;
   }
 
   const step = currentSteps[si];
 
   document.getElementById('modal-title-text').textContent = step.title;
-  document.getElementById('modal-subtitle').textContent = `${activePhaseName} · Etapa ${si + 1}`;
+  document.getElementById('modal-subtitle').textContent = `${activePhaseName} · Etapa ${absoluteNumber}`;
 
   document.getElementById('modal-body').innerHTML = `
     <div>
